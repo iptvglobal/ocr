@@ -4,7 +4,7 @@ import { Header } from './components/Header';
 import { ImageUploader } from './components/ImageUploader';
 import { LanguageSelector } from './components/LanguageSelector';
 import { ResultDisplay } from './components/ResultDisplay';
-import { extractTextFromImage, translateText } from './services/geminiService';
+import { extractAndTranslate } from './services/geminiService';
 import { fileToGenerativePart } from './utils/imageUtils';
 import { LANGUAGES } from './constants';
 
