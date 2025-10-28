@@ -15,7 +15,8 @@ const getAiClient = (): GoogleGenAI => {
   }
 
   if (!ai) {
-    ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    this.ai = new GoogleGenAI({ apiKey: process.env['GEMINI_API_KEY']! });
+
   }
 
   return ai;
