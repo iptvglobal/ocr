@@ -11,7 +11,7 @@ let ai: GoogleGenAI | null = null;
  */
 const getAiClient = (): GoogleGenAI => {
   if (!process.env.API_KEY) {
-    throw new Error("Configuration Error: The API_KEY environment variable is not set. Please add it to your deployment's variables and redeploy the application.");
+    throw new Error("Configuration Error: The API_KEY environment variable is not set. Please add it as an environment variable on your hosting platform and redeploy the application.");
   }
 
   if (!ai) {
