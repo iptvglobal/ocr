@@ -1,0 +1,5 @@
+{
+  "name": "Vision Translate AI",
+  "description": "An intelligent web application that extracts text from any uploaded image and translates it into your desired language using the power of Google's Gemini API.",
+  "requestFramePermissions": []
+}
