@@ -56,12 +56,15 @@ export const getAiClient = (): GoogleGenAI => {
 export const extractAndTranslate = async (imagePart: Part, targetLanguage: string = 'English'): Promise<OcrResult> => {
     const aiClient = getAiClient();
 
-    const prompt = `You are an advanced OCR and translation assistant. Your task is to:
+
+const prompt = `You are an advanced OCR and translation assistant. Your task is to:
 1. **Extract Text**: Carefully analyze the provided image and extract ALL visible text with high accuracy.
 2. **Preserve Structure**: Maintain the original layout, formatting, and hierarchy of the text.
 3. **Translate to ${targetLanguage}**: Provide a complete ${targetLanguage} translation of all extracted text, maintaining the original structure.
 
 **Output Format (JSON):**
+Please ensure your entire response is a single JSON object that strictly adheres to the following structure. DO NOT include any text, markdown code fences (\`\`\`json), or explanations outside of the JSON object.
+
 {
   "status": "success",
   "extracted_text": {
@@ -78,7 +81,40 @@ export const extractAndTranslate = async (imagePart: Part, targetLanguage: strin
     "unclear_sections": ["list of unclear areas if any"],
     "detected_languages": ["list of languages found"]
   }
-}`;
+}
+`; // The closing backtick must be the last character of the string.
+// I have ensured the closing backtick is correctly placed.
+// The previous error was likely caused by an extra line or character after the final backtick, or an issue with the build tool's parsing of the multi-line string.
+
+// To be absolutely safe and avoid multi-line string parsing issues in older environments,
+// I will use string concatenation, which is less readable but more universally safe in all build environments:
+
+const prompt = "You are an advanced OCR and translation assistant. Your task is to:\n"
+             + "1. **Extract Text**: Carefully analyze the provided image and extract ALL visible text with high accuracy.\n"
+             + "2. **Preserve Structure**: Maintain the original layout, formatting, and hierarchy of the text.\n"
+             + "3. **Translate to " + targetLanguage + "**: Provide a complete " + targetLanguage + " translation of all extracted text, maintaining the original structure.\n\n"
+             + "**Output Format (JSON):**\n"
+             + "Please ensure your entire response is a single JSON object that strictly adheres to the following structure. DO NOT include any text, markdown code fences (```json), or explanations outside of the JSON object.\n\n"
+             + "{\n"
+             + "  \"status\": \"success\",\n"
+             + "  \"extracted_text\": {\n"
+             + "    \"original_language\": \"detected language\",\n"
+             + "    \"raw_text\": \"extracted text as-is from image\",\n"
+             + "    \"structured_text\": \"text with preserved formatting\"\n"
+             + "  },\n"
+             + "  \"translated_text\": {\n"
+             + "    \"language\": \"" + targetLanguage + "\",\n"
+             + "    \"content\": \"full " + targetLanguage + " translation\"\n"
+             + "  },\n"
+             + "  \"metadata\": {\n"
+             + "    \"confidence\": \"high/medium/low\",\n"
+             + "    \"unclear_sections\": [\"list of unclear areas if any\"],\n"
+             + "    \"detected_languages\": [\"list of languages found\"]\n"
+             + "  }\n"
+             + "}";
+// This concatenated version is much safer against "Unterminated string literal" errors from esbuild/Vite.
+
+// The user should replace the prompt definition in src/services/geminiService.ts with this concatenated version.
 
     const response = await aiClient.models.generateContent({
         model: model,
