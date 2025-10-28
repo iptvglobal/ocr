@@ -1,7 +1,26 @@
-// src/services/geminiService.ts
+// Final, Consolidated Code for src/services/geminiService.ts
 
 import { GoogleGenAI, Part } from "@google/genai";
-import { OcrResult } from "../models/OcrResult"; // Import the defined interface
+
+// --- CONSOLIDATED OCR RESULT INTERFACE ---
+// Since the 'models' folder is missing, the interface is defined here.
+export interface OcrResult {
+    status: string;
+    extracted_text: {
+        original_language: string;
+        raw_text: string;
+        structured_text: string;
+    };
+    translated_text: {
+        language: string;
+        content: string;
+    };
+    metadata: {
+        confidence: string;
+        unclear_sections: string[];
+        detected_languages: string[];
+    };
+}
 
 // Lazily Initialize to avoid crashing the app on module load if API_KEY is missing.
 let ai: GoogleGenAI | null = null;
@@ -73,10 +92,16 @@ export const extractAndTranslate = async (imagePart: Part, targetLanguage: strin
     }
 
     try {
-        const result = JSON.parse(responseText) as OcrResult;
+        // The model sometimes wraps the JSON in markdown code fences (```json ... ```)
+        // This regex attempts to clean the response before parsing.
+        const jsonMatch = responseText.match(/```json\s*([\s\S]*?)\s*```/);
+        const jsonString = jsonMatch ? jsonMatch[1] : responseText;
+        
+        const result = JSON.parse(jsonString) as OcrResult;
         return result;
     } catch (e) {
         console.error("Failed to parse JSON response from Gemini API:", e);
         throw new Error(`Invalid JSON format from API. Raw response: ${responseText}`);
     }
 };
+```
