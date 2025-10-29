@@ -14,15 +14,21 @@ const SparklesIcon: React.FC<{className?: string}> = ({className}) => (
 export const Navbar: React.FC<NavbarProps> = ({ navigate, currentPath }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const NavLink: React.FC<{ path: string; children: React.ReactNode }> = ({ path, children }) => (
-    <a
-      href={path}
-      onClick={(e) => { e.preventDefault(); navigate(path); setIsOpen(false); }}
-      className={`text-base font-medium transition-colors ${currentPath === path ? 'text-indigo-400' : 'text-gray-300 hover:text-white'}`}
-    >
-      {children}
-    </a>
-  );
+  const NavLink: React.FC<{ path: string; children: React.ReactNode; mobile?: boolean }> = ({ path, children, mobile = false }) => {
+    const baseClasses = "text-base font-medium transition-colors";
+    const desktopClasses = currentPath === path ? 'text-indigo-400' : 'text-gray-300 hover:text-white';
+    const mobileClasses = `block px-3 py-2 rounded-md ${currentPath === path ? 'bg-gray-700 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white'}`;
+
+    return (
+        <a
+        href={path}
+        onClick={(e) => { e.preventDefault(); navigate(path); setIsOpen(false); }}
+        className={`${baseClasses} ${mobile ? mobileClasses : desktopClasses}`}
+        >
+        {children}
+        </a>
+    );
+  };
   
   const handleTryNowClick = (e: React.MouseEvent) => {
       e.preventDefault();
@@ -88,9 +94,9 @@ export const Navbar: React.FC<NavbarProps> = ({ navigate, currentPath }) => {
       {isOpen && (
         <div className="md:hidden" id="mobile-menu">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <NavLink path="/">Home</NavLink>
-            <NavLink path="/about">About</NavLink>
-            <NavLink path="/faq">FAQ</NavLink>
+            <NavLink path="/" mobile>Home</NavLink>
+            <NavLink path="/about" mobile>About</NavLink>
+            <NavLink path="/faq" mobile>FAQ</NavLink>
              <button
                 onClick={handleTryNowClick}
                 className="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
