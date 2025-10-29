@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 const SparklesIcon: React.FC = () => (
@@ -8,7 +7,7 @@ const SparklesIcon: React.FC = () => (
 );
 
 
-export const Header: React.FC = () => {
+export const ToolHeader: React.FC = () => {
   return (
     <header className="w-full max-w-4xl mx-auto text-center py-8 mb-4">
       <div className="flex items-center justify-center space-x-3">

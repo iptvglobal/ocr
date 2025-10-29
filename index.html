@@ -1,10 +1,12 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vision Translate AI</title>
+    <title>Vision Translate AI | Instant Image to Text Translation & OCR</title>
+    <meta name="description" content="Instantly extract text from images and translate it into dozens of languages with Vision Translate AI. Our powerful OCR tool, powered by Google's Gemini API, provides fast and accurate results.">
+    <meta name="keywords" content="extract text from image, image to text, ocr, online ocr, photo translator, image translation, multilingual ocr, gemini api, vision translate">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       /* Simple scrollbar styling for a more modern look */
@@ -12,7 +14,7 @@
         width: 8px;
       }
       ::-webkit-scrollbar-track {
-        background: #1f2937; /* bg-gray-800 */
+        background: #111827; /* bg-gray-900 */
       }
       ::-webkit-scrollbar-thumb {
         background: #4b5563; /* bg-gray-600 */
@@ -21,8 +23,11 @@
       ::-webkit-scrollbar-thumb:hover {
         background: #6b7280; /* bg-gray-500 */
       }
+      html {
+        scroll-behavior: smooth;
+      }
     </style>
-  <script type="importmap">
+    <script type="importmap">
 {
   "imports": {
     "@google/genai": "https://aistudiocdn.com/@google/genai@^1.27.0",
@@ -32,7 +37,49 @@
   }
 }
 </script>
-</head>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Vision Translate AI",
+  "description": "An intelligent web application that extracts text from any uploaded image and translates it into your desired language using the power of Google's Gemini API.",
+  "applicationCategory": "ProductivityApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "Is my image data stored on your servers?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No, your privacy is our top priority. Images are sent directly to Google's Gemini API for processing and are never stored on our servers. The process is designed to be stateless; we process your image and then immediately discard it."
+    }
+  },{
+    "@type": "Question",
+    "name": "What image formats are supported?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "We support all common image formats, including PNG, JPG/JPEG, and WEBP. For best results, use a clear image with high contrast between the text and the background."
+    }
+  },{
+    "@type": "Question",
+    "name": "How accurate is the text extraction?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Powered by Google's state-of-the-art Gemini model, our tool offers extremely high accuracy for text extraction and translation. Accuracy can vary based on image quality, text clarity, and font style."
+    }
+  }]
+}
+</script>
+  </head>
   <body class="bg-gray-900 text-gray-100 font-sans antialiased">
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
