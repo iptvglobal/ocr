@@ -23,6 +23,21 @@ export const Navbar: React.FC<NavbarProps> = ({ navigate, currentPath }) => {
       {children}
     </a>
   );
+  
+  const handleTryNowClick = (e: React.MouseEvent) => {
+      e.preventDefault();
+      setIsOpen(false);
+      
+      if (currentPath === '/') {
+          document.getElementById('tool')?.scrollIntoView({ behavior: 'smooth' });
+      } else {
+          navigate('/');
+          setTimeout(() => {
+              document.getElementById('tool')?.scrollIntoView({ behavior: 'smooth' });
+          }, 100);
+      }
+  };
+
 
   return (
     <nav className="sticky top-0 z-50 bg-gray-900/80 backdrop-blur-lg border-b border-gray-800">
@@ -40,7 +55,7 @@ export const Navbar: React.FC<NavbarProps> = ({ navigate, currentPath }) => {
               <NavLink path="/about">About</NavLink>
               <NavLink path="/faq">FAQ</NavLink>
               <button
-                onClick={() => navigate('/tool')}
+                onClick={handleTryNowClick}
                 className="ml-4 px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition-colors"
               >
                 Try Now
@@ -77,7 +92,7 @@ export const Navbar: React.FC<NavbarProps> = ({ navigate, currentPath }) => {
             <NavLink path="/about">About</NavLink>
             <NavLink path="/faq">FAQ</NavLink>
              <button
-                onClick={() => {navigate('/tool'); setIsOpen(false);}}
+                onClick={handleTryNowClick}
                 className="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
               >
                 Try Now

@@ -2,6 +2,7 @@ import React from 'react';
 
 interface FooterProps {
   navigate: (path: string) => void;
+  currentPath: string;
 }
 
 const SparklesIcon: React.FC<{className?: string}> = ({className}) => (
@@ -10,7 +11,7 @@ const SparklesIcon: React.FC<{className?: string}> = ({className}) => (
     </svg>
 );
 
-export const Footer: React.FC<FooterProps> = ({ navigate }) => {
+export const Footer: React.FC<FooterProps> = ({ navigate, currentPath }) => {
   const FooterLink: React.FC<{ path: string; children: React.ReactNode }> = ({ path, children }) => (
     <li>
       <a href={path} onClick={(e) => { e.preventDefault(); navigate(path); }} className="text-gray-400 hover:text-white transition-colors">
@@ -18,6 +19,18 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
       </a>
     </li>
   );
+  
+  const handleTryNowClick = (e: React.MouseEvent) => {
+      e.preventDefault();
+      if (currentPath === '/') {
+          document.getElementById('tool')?.scrollIntoView({ behavior: 'smooth' });
+      } else {
+          navigate('/');
+          setTimeout(() => {
+              document.getElementById('tool')?.scrollIntoView({ behavior: 'smooth' });
+          }, 100);
+      }
+  };
 
   return (
     <footer className="bg-gray-800 border-t border-gray-700">
@@ -43,7 +56,11 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
                   <FooterLink path="/">Home</FooterLink>
                   <FooterLink path="/about">About</FooterLink>
                   <FooterLink path="/faq">FAQ</FooterLink>
-                  <FooterLink path="/tool">Try Now</FooterLink>
+                  <li>
+                    <a href="/#tool" onClick={handleTryNowClick} className="text-gray-400 hover:text-white transition-colors">
+                      Try Now
+                    </a>
+                  </li>
                 </ul>
               </div>
               <div className="mt-12 md:mt-0">

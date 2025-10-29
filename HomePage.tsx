@@ -1,4 +1,11 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
+import { ImageUploader } from './components/ImageUploader';
+import { LanguageSelector } from './components/LanguageSelector';
+import { ResultDisplay } from './components/ResultDisplay';
+import { extractTextFromImage, translateText } from './services/geminiService';
+import { fileToGenerativePart } from './utils/imageUtils';
+import { LANGUAGES } from './constants';
+
 
 interface HomePageProps {
   navigate: (path: string) => void;
@@ -53,6 +60,72 @@ const FeatureBlock: React.FC<{ icon: React.ReactNode, title: string, children: R
 
 
 const HomePage: React.FC<HomePageProps> = ({ navigate }) => {
+    const [imageFile, setImageFile] = useState<File | null>(null);
+    const [imageUrl, setImageUrl] = useState<string | null>(null);
+    const [extractedText, setExtractedText] = useState<string>('');
+    const [translatedText, setTranslatedText] = useState<string>('');
+    const [targetLanguage, setTargetLanguage] = useState<string>('English');
+    const [isExtracting, setIsExtracting] = useState<boolean>(false);
+    const [isTranslating, setIsTranslating] = useState<boolean>(false);
+    const [error, setError] = useState<string | null>(null);
+
+    const handleImageSelect = (file: File) => {
+        setImageFile(file);
+        setImageUrl(URL.createObjectURL(file));
+        setExtractedText('');
+        setTranslatedText('');
+        setError(null);
+    };
+
+    const handleExtract = useCallback(async () => {
+        if (!imageFile) {
+        setError('Please upload an image first.');
+        return;
+        }
+
+        setIsExtracting(true);
+        setError(null);
+        setExtractedText('');
+        setTranslatedText('');
+
+        try {
+        const imagePart = await fileToGenerativePart(imageFile);
+        const textFromImage = await extractTextFromImage(imagePart);
+        setExtractedText(textFromImage);
+        } catch (err) {
+        console.error(err);
+        setError(err instanceof Error ? err.message : 'An unknown error occurred. Please try again.');
+        } finally {
+        setIsExtracting(false);
+        }
+    }, [imageFile]);
+    
+    const handleTranslate = useCallback(async () => {
+        if (!extractedText) {
+            setError('There is no text to translate.');
+            return;
+        }
+        
+        setIsTranslating(true);
+        setError(null);
+        setTranslatedText('');
+
+        try {
+            const translation = await translateText(extractedText, targetLanguage);
+            setTranslatedText(translation);
+        } catch (err) {
+            console.error(err);
+            setError(err instanceof Error ? err.message : 'An unknown error occurred during translation.');
+        } finally {
+            setIsTranslating(false);
+        }
+
+    }, [extractedText, targetLanguage]);
+    
+    const handleCtaClick = () => {
+        document.getElementById('tool')?.scrollIntoView({ behavior: 'smooth' });
+    };
+
   return (
     <div className="space-y-24 md:space-y-32 pb-24">
       {/* Hero Section */}
@@ -66,12 +139,68 @@ const HomePage: React.FC<HomePageProps> = ({ navigate }) => {
           </p>
           <div className="mt-10">
             <button
-              onClick={() => navigate('/tool')}
+              onClick={handleCtaClick}
               className="px-8 py-4 border border-transparent text-lg font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-500/20 transform hover:scale-105"
             >
               Start Extracting for Free
             </button>
           </div>
+        </div>
+      </section>
+
+      {/* Tool Section */}
+      <section id="tool" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-20">
+        <div className="text-center mb-12">
+            <h2 className="text-3xl font-extrabold text-white sm:text-4xl">See The Magic Happen Live</h2>
+             <p className="mt-4 text-lg text-gray-400 max-w-2xl mx-auto">
+                Upload an image to instantly extract its text. After extraction, you can translate it into a language of your choice.
+            </p>
+        </div>
+        <div className="w-full flex flex-col items-center space-y-6">
+            <div className="w-full p-6 bg-gray-800 rounded-xl shadow-lg border border-gray-700">
+                <div className="flex flex-col items-center space-y-4">
+                    <ImageUploader onImageSelect={handleImageSelect} imageUrl={imageUrl} />
+                    <button
+                        onClick={handleExtract}
+                        disabled={!imageFile || isExtracting || isTranslating}
+                        className="w-full max-w-xs flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500 disabled:bg-indigo-400 disabled:cursor-not-allowed transition-colors"
+                    >
+                        {isExtracting ? 'Extracting...' : 'Extract Text'}
+                    </button>
+                </div>
+            </div>
+
+            {error && (
+            <div className="w-full text-center p-4 bg-red-900/50 text-red-300 border border-red-700 rounded-md">
+                <p><strong>Error:</strong> {error}</p>
+            </div>
+            )}
+
+            <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
+            <ResultDisplay title="Extracted Text" text={extractedText} isLoading={isExtracting} />
+            <div className="flex flex-col space-y-4">
+                {extractedText && (
+                    <div className="w-full p-4 bg-gray-800 rounded-xl shadow-lg border border-gray-700 flex flex-col md:flex-row items-center gap-4">
+                        <div className="w-full md:w-2/3">
+                            <LanguageSelector
+                            selectedLanguage={targetLanguage}
+                            onLanguageChange={(e) => setTargetLanguage(e.target.value)}
+                            languages={LANGUAGES}
+                            disabled={isTranslating || isExtracting}
+                            />
+                        </div>
+                        <button
+                            onClick={handleTranslate}
+                            disabled={isTranslating || isExtracting}
+                            className="w-full md:w-1/3 flex justify-center items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-purple-500 disabled:bg-purple-400 disabled:cursor-not-allowed transition-colors"
+                        >
+                            {isTranslating ? 'Translating...' : 'Translate'}
+                        </button>
+                    </div>
+                )}
+                <ResultDisplay title="Translated Text" text={translatedText} isLoading={isTranslating} />
+            </div>
+            </div>
         </div>
       </section>
 
@@ -88,7 +217,7 @@ const HomePage: React.FC<HomePageProps> = ({ navigate }) => {
                 description="Instantly extract text from screenshots, presentations, and on-screen content with one click. Perfect for virtual meetings and research."
                 features={["Real-time capture", "Smart region selection", "Auto-sync to clipboard"]}
                 cta="Try Screen Capture →"
-                onCtaClick={() => navigate('/tool')}
+                onCtaClick={handleCtaClick}
             />
             <ServiceCard 
                 icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l-1-1a2 2 0 010-2.828l1-1a2 2 0 012.828 0l2 2A2 2 0 0119 12v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>}
@@ -96,7 +225,7 @@ const HomePage: React.FC<HomePageProps> = ({ navigate }) => {
                 description="Convert photos, scanned documents, and image files into editable text formats. Industry-leading accuracy powered by AI."
                 features={["AI-powered recognition", "100+ language support", "Layout preservation"]}
                 cta="Upload Image →"
-                onCtaClick={() => navigate('/tool')}
+                onCtaClick={handleCtaClick}
             />
             <ServiceCard 
                 icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>}
@@ -104,7 +233,7 @@ const HomePage: React.FC<HomePageProps> = ({ navigate }) => {
                 description="Extract text from any picture format - from street signs to business cards. Multi-format support with instant results."
                 features={["Mobile photo processing", "Business card scanning", "Multi-format export"]}
                 cta="Start Converting →"
-                onCtaClick={() => navigate('/tool')}
+                onCtaClick={handleCtaClick}
             />
         </div>
       </section>
@@ -141,7 +270,7 @@ const HomePage: React.FC<HomePageProps> = ({ navigate }) => {
                  <p className="mt-4 text-lg text-indigo-100">Join 500,000+ users who save 20+ hours per week.</p>
                  <div className="mt-8">
                     <button
-                        onClick={() => navigate('/tool')}
+                        onClick={handleCtaClick}
                         className="px-8 py-4 border border-transparent text-lg font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-100 transition-colors shadow-lg transform hover:scale-105"
                     >
                         Try Screen 2 Text Now

@@ -2,7 +2,6 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import HomePage from './HomePage';
-import TranslateToolPage from './TranslateToolPage';
 import AboutPage from './AboutPage';
 import FAQPage from './FAQPage';
 import PrivacyPage from './PrivacyPage';
@@ -33,8 +32,6 @@ const App: React.FC = () => {
     switch (currentPath) {
       case '/':
         return <HomePage navigate={navigate} />;
-      case '/tool':
-        return <TranslateToolPage />;
       case '/about':
         return <AboutPage />;
       case '/faq':
@@ -54,7 +51,7 @@ const App: React.FC = () => {
       <main className="flex-grow">
         {renderPage()}
       </main>
-      <Footer navigate={navigate} />
+      <Footer navigate={navigate} currentPath={currentPath} />
     </div>
   );
 };
