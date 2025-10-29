@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Page } from '../App';
 
 interface NavbarProps {
-  setPage: (page: Page) => void;
-  currentPage: Page;
+  navigate: (page: string) => void;
+  currentPath: string;
 }
 
 const SparklesIcon: React.FC<{className?: string}> = ({className}) => (
@@ -12,14 +11,14 @@ const SparklesIcon: React.FC<{className?: string}> = ({className}) => (
     </svg>
 );
 
-export const Navbar: React.FC<NavbarProps> = ({ setPage, currentPage }) => {
+export const Navbar: React.FC<NavbarProps> = ({ navigate, currentPath }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const NavLink: React.FC<{ page: Page; children: React.ReactNode }> = ({ page, children }) => (
+  const NavLink: React.FC<{ path: string; children: React.ReactNode }> = ({ path, children }) => (
     <a
-      href={`#${page}`}
-      onClick={(e) => { e.preventDefault(); setPage(page); setIsOpen(false); }}
-      className={`text-base font-medium transition-colors ${currentPage === page ? 'text-indigo-400' : 'text-gray-300 hover:text-white'}`}
+      href={path}
+      onClick={(e) => { e.preventDefault(); navigate(path); setIsOpen(false); }}
+      className={`text-base font-medium transition-colors ${currentPath === path ? 'text-indigo-400' : 'text-gray-300 hover:text-white'}`}
     >
       {children}
     </a>
@@ -30,18 +29,18 @@ export const Navbar: React.FC<NavbarProps> = ({ setPage, currentPage }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <a href="#home" onClick={(e) => { e.preventDefault(); setPage('home'); }} className="flex items-center space-x-2">
+            <a href="/" onClick={(e) => { e.preventDefault(); navigate('/'); }} className="flex items-center space-x-2">
                <SparklesIcon />
-               <span className="text-xl font-bold text-white">Vision Translate AI</span>
+               <span className="text-xl font-bold text-white">Screen 2 Text</span>
             </a>
           </div>
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-4">
-              <NavLink page="home">Home</NavLink>
-              <NavLink page="about">About</NavLink>
-              <NavLink page="faq">FAQ</NavLink>
+              <NavLink path="/">Home</NavLink>
+              <NavLink path="/about">About</NavLink>
+              <NavLink path="/faq">FAQ</NavLink>
               <button
-                onClick={() => setPage('tool')}
+                onClick={() => navigate('/tool')}
                 className="ml-4 px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition-colors"
               >
                 Try Now
@@ -74,11 +73,11 @@ export const Navbar: React.FC<NavbarProps> = ({ setPage, currentPage }) => {
       {isOpen && (
         <div className="md:hidden" id="mobile-menu">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <NavLink page="home">Home</NavLink>
-            <NavLink page="about">About</NavLink>
-            <NavLink page="faq">FAQ</NavLink>
+            <NavLink path="/">Home</NavLink>
+            <NavLink path="/about">About</NavLink>
+            <NavLink path="/faq">FAQ</NavLink>
              <button
-                onClick={() => {setPage('tool'); setIsOpen(false);}}
+                onClick={() => {navigate('/tool'); setIsOpen(false);}}
                 className="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
               >
                 Try Now

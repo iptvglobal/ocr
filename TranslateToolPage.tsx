@@ -13,7 +13,10 @@ const TranslateToolPage: React.FC = () => {
   const [extractedText, setExtractedText] = useState<string>('');
   const [translatedText, setTranslatedText] = useState<string>('');
   const [targetLanguage, setTargetLanguage] = useState<string>('Spanish');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  
+  const [isExtracting, setIsExtracting] = useState<boolean>(false);
+  const [isTranslating, setIsTranslating] = useState<boolean>(false);
+
   const [error, setError] = useState<string | null>(null);
 
   const handleImageSelect = (file: File) => {
@@ -24,65 +27,70 @@ const TranslateToolPage: React.FC = () => {
     setError(null);
   };
 
-  const handleSubmit = useCallback(async () => {
+  const handleExtract = useCallback(async () => {
     if (!imageFile) {
       setError('Please upload an image first.');
       return;
     }
 
-    setIsLoading(true);
+    setIsExtracting(true);
     setError(null);
     setExtractedText('');
     setTranslatedText('');
 
     try {
       const imagePart = await fileToGenerativePart(imageFile);
-      
       const textFromImage = await extractTextFromImage(imagePart);
       setExtractedText(textFromImage);
-
-      if (textFromImage.trim()) {
-        const translation = await translateText(textFromImage, targetLanguage);
-        setTranslatedText(translation);
-      } else {
-        setTranslatedText('No text found to translate.');
-      }
-
     } catch (err) {
       console.error(err);
       setError(err instanceof Error ? err.message : 'An unknown error occurred. Please try again.');
     } finally {
-      setIsLoading(false);
+      setIsExtracting(false);
     }
-  }, [imageFile, targetLanguage]);
+  }, [imageFile]);
+  
+  const handleTranslate = useCallback(async () => {
+    if (!extractedText) {
+        setError('There is no text to translate.');
+        return;
+    }
+    
+    setIsTranslating(true);
+    setError(null);
+    setTranslatedText('');
+
+    try {
+        const translation = await translateText(extractedText, targetLanguage);
+        setTranslatedText(translation);
+    } catch (err) {
+        console.error(err);
+        setError(err instanceof Error ? err.message : 'An unknown error occurred during translation.');
+    } finally {
+        setIsTranslating(false);
+    }
+
+  }, [extractedText, targetLanguage]);
 
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100 flex flex-col items-center p-4 sm:p-6 lg:p-8">
       <ToolHeader />
       <div className="w-full max-w-4xl mx-auto flex flex-col items-center space-y-6">
         <p className="text-center text-lg text-gray-400 max-w-2xl">
-          Upload an image to instantly extract its text and translate it into a language of your choice. Powered by Gemini.
+          Upload an image to instantly extract its text. After extraction, you can translate it into a language of your choice.
         </p>
         
         <div className="w-full p-6 bg-gray-800 rounded-xl shadow-lg border border-gray-700">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <ImageUploader onImageSelect={handleImageSelect} imageUrl={imageUrl} />
-            <div className="flex flex-col justify-center space-y-4">
-              <LanguageSelector
-                selectedLanguage={targetLanguage}
-                onLanguageChange={(e) => setTargetLanguage(e.target.value)}
-                languages={LANGUAGES}
-                disabled={isLoading}
-              />
-              <button
-                onClick={handleSubmit}
-                disabled={!imageFile || isLoading}
-                className="w-full flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500 disabled:bg-indigo-400 disabled:cursor-not-allowed transition-colors"
-              >
-                {isLoading ? 'Processing...' : 'Extract & Translate'}
-              </button>
+            <div className="flex flex-col items-center space-y-4">
+                <ImageUploader onImageSelect={handleImageSelect} imageUrl={imageUrl} />
+                <button
+                    onClick={handleExtract}
+                    disabled={!imageFile || isExtracting || isTranslating}
+                    className="w-full max-w-xs flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500 disabled:bg-indigo-400 disabled:cursor-not-allowed transition-colors"
+                >
+                    {isExtracting ? 'Extracting...' : 'Extract Text'}
+                </button>
             </div>
-          </div>
         </div>
 
         {error && (
@@ -92,8 +100,29 @@ const TranslateToolPage: React.FC = () => {
         )}
 
         <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
-          <ResultDisplay title="Extracted Text" text={extractedText} isLoading={isLoading} />
-          <ResultDisplay title="Translated Text" text={translatedText} isLoading={isLoading} />
+          <ResultDisplay title="Extracted Text" text={extractedText} isLoading={isExtracting} />
+          <div className="flex flex-col space-y-4">
+            {extractedText && (
+                <div className="w-full p-4 bg-gray-800 rounded-xl shadow-lg border border-gray-700 flex flex-col md:flex-row items-center gap-4">
+                    <div className="w-full md:w-2/3">
+                        <LanguageSelector
+                        selectedLanguage={targetLanguage}
+                        onLanguageChange={(e) => setTargetLanguage(e.target.value)}
+                        languages={LANGUAGES}
+                        disabled={isTranslating || isExtracting}
+                        />
+                    </div>
+                    <button
+                        onClick={handleTranslate}
+                        disabled={isTranslating || isExtracting}
+                        className="w-full md:w-1/3 flex justify-center items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-purple-500 disabled:bg-purple-400 disabled:cursor-not-allowed transition-colors"
+                    >
+                        {isTranslating ? 'Translating...' : 'Translate'}
+                    </button>
+                </div>
+            )}
+            <ResultDisplay title="Translated Text" text={translatedText} isLoading={isTranslating} />
+          </div>
         </div>
       </div>
     </div>

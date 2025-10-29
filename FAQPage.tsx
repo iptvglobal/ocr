@@ -15,7 +15,7 @@ const faqData = [
     answer: "Powered by Google's state-of-the-art Gemini model, our tool offers extremely high accuracy. However, accuracy can vary based on the image quality, the clarity and font of the text, and the complexity of the language. For translations, the AI provides a context-aware result that is generally very reliable."
   },
   {
-    question: "Is Vision Translate AI free to use?",
+    question: "Is Screen 2 Text free to use?",
     answer: "Yes, our basic service is completely free to use. We believe in making this technology accessible to everyone."
   },
   {

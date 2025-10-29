@@ -9,7 +9,7 @@ const PrivacyPage: React.FC = () => {
           <p className="mt-4 text-lg text-gray-300">Last updated: {new Date().toLocaleDateString()}</p>
         </div>
         <div className="prose prose-invert prose-lg mx-auto text-gray-300 leading-relaxed">
-          <p>Your privacy is important to us. It is Vision Translate AI's policy to respect your privacy regarding any information we may process while operating our website.</p>
+          <p>Your privacy is important to us. It is Screen 2 Text's policy to respect your privacy regarding any information we may process while operating our website.</p>
 
           <h3>Data We Process</h3>
           <p>

@@ -1,25 +1,8 @@
-
 import { GoogleGenAI, Part } from "@google/genai";
 
-// Lazily initialize to avoid crashing the app on module load if GEMINI_API_KEY is missing.
-let ai: GoogleGenAI | null = null;
-
-/**
- * Initializes and returns the GoogleGenAI client instance.
- * Throws an error if the GEMINI_API_KEY environment variable is not set.
- * @returns An instance of GoogleGenAI.
- */
-const getAiClient = (): GoogleGenAI => {
-  if (!process.env.GEMINI_API_KEY) {
-    throw new Error("Configuration Error: The GEMINI_API_KEY environment variable is not set. Please add the GEMINI_API_KEY to your environment variables in your hosting platform's configuration.");
-  }
-
-  if (!ai) {
-    ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-  }
-
-  return ai;
-};
+// As per guidelines, initialize the client directly.
+// The API key MUST be available in process.env.API_KEY.
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 const model = 'gemini-2.5-flash';
 
@@ -29,19 +12,16 @@ const model = 'gemini-2.5-flash';
  * @returns The extracted text as a string.
  */
 export async function extractTextFromImage(imagePart: Part): Promise<string> {
-  const prompt = "Extract all text from this image. Only return the text content, without any commentary, formatting, or labels.";
+  const prompt = "Extract all text from this image. Preserve the original formatting as much as possible. Only return the text content, without any commentary or labels.";
   
   try {
-    const client = getAiClient(); // This will throw if the key is missing.
-    const response = await client.models.generateContent({
+    const response = await ai.models.generateContent({
         model: model,
         contents: { parts: [imagePart, { text: prompt }] },
     });
     return response.text.trim();
   } catch (error) {
     console.error("Error extracting text from image:", error);
-    // Re-throw the original error to be caught by the UI component.
-    // This preserves specific messages like the API key error.
     if (error instanceof Error) {
         throw error;
     }
@@ -59,15 +39,13 @@ export async function translateText(text: string, targetLanguage: string): Promi
   const prompt = `Translate the following text to ${targetLanguage}. Provide only the translated text, with no additional explanation or context.\n\nText to translate:\n"""\n${text}\n"""`;
 
   try {
-    const client = getAiClient(); // This will throw if the key is missing.
-    const response = await client.models.generateContent({
+    const response = await ai.models.generateContent({
         model: model,
         contents: prompt
     });
     return response.text.trim();
   } catch (error) {
     console.error("Error translating text:", error);
-    // Re-throw the original error.
     if (error instanceof Error) {
         throw error;
     }

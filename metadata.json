@@ -1,5 +1,5 @@
 {
-  "name": "Vision Translate AI",
-  "description": "A powerful, AI-driven web application to extract text from images and translate it into dozens of languages. Features a marketing homepage, FAQ, and privacy pages, all powered by Google's Gemini API.",
+  "name": "Screen 2 Text",
+  "description": "A powerful, AI-driven web application to extract text from screenshots, images, and documents. Features a modern marketing homepage and a streamlined OCR tool powered by Google's Gemini API.",
   "requestFramePermissions": []
 }

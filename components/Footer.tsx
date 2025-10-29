@@ -1,8 +1,7 @@
 import React from 'react';
-import { Page } from '../App';
 
 interface FooterProps {
-  setPage: (page: Page) => void;
+  navigate: (path: string) => void;
 }
 
 const SparklesIcon: React.FC<{className?: string}> = ({className}) => (
@@ -11,10 +10,10 @@ const SparklesIcon: React.FC<{className?: string}> = ({className}) => (
     </svg>
 );
 
-export const Footer: React.FC<FooterProps> = ({ setPage }) => {
-  const FooterLink: React.FC<{ page: Page; children: React.ReactNode }> = ({ page, children }) => (
+export const Footer: React.FC<FooterProps> = ({ navigate }) => {
+  const FooterLink: React.FC<{ path: string; children: React.ReactNode }> = ({ path, children }) => (
     <li>
-      <a href={`#${page}`} onClick={(e) => { e.preventDefault(); setPage(page); }} className="text-gray-400 hover:text-white transition-colors">
+      <a href={path} onClick={(e) => { e.preventDefault(); navigate(path); }} className="text-gray-400 hover:text-white transition-colors">
         {children}
       </a>
     </li>
@@ -25,12 +24,12 @@ export const Footer: React.FC<FooterProps> = ({ setPage }) => {
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="space-y-4">
-             <a href="#home" onClick={(e) => { e.preventDefault(); setPage('home'); }} className="flex items-center space-x-2">
+             <a href="/" onClick={(e) => { e.preventDefault(); navigate('/'); }} className="flex items-center space-x-2">
                <SparklesIcon />
-               <span className="text-xl font-bold text-white">Vision Translate AI</span>
+               <span className="text-xl font-bold text-white">Screen 2 Text</span>
             </a>
             <p className="text-gray-400 text-base">
-              Extracting and translating text from images with the power of Google's Gemini AI.
+              Extracting text from images, screenshots, and documents with the power of Google's Gemini AI.
             </p>
             <p className="text-xs text-gray-500">
                 Powered by Google Cloud and Gemini API.
@@ -41,24 +40,24 @@ export const Footer: React.FC<FooterProps> = ({ setPage }) => {
               <div>
                 <h3 className="text-sm font-semibold text-gray-300 tracking-wider uppercase">Sitemap</h3>
                 <ul className="mt-4 space-y-4">
-                  <FooterLink page="home">Home</FooterLink>
-                  <FooterLink page="about">About</FooterLink>
-                  <FooterLink page="faq">FAQ</FooterLink>
-                  <FooterLink page="tool">Try Now</FooterLink>
+                  <FooterLink path="/">Home</FooterLink>
+                  <FooterLink path="/about">About</FooterLink>
+                  <FooterLink path="/faq">FAQ</FooterLink>
+                  <FooterLink path="/tool">Try Now</FooterLink>
                 </ul>
               </div>
               <div className="mt-12 md:mt-0">
                 <h3 className="text-sm font-semibold text-gray-300 tracking-wider uppercase">Legal</h3>
                 <ul className="mt-4 space-y-4">
-                  <FooterLink page="privacy">Privacy Policy</FooterLink>
-                  <FooterLink page="tos">Terms of Service</FooterLink>
+                  <FooterLink path="/privacy">Privacy Policy</FooterLink>
+                  <FooterLink path="/tos">Terms of Service</FooterLink>
                 </ul>
               </div>
             </div>
           </div>
         </div>
         <div className="mt-8 border-t border-gray-700 pt-8 text-center">
-          <p className="text-base text-gray-400">&copy; {new Date().getFullYear()} Vision Translate AI. All rights reserved.</p>
+          <p className="text-base text-gray-400">&copy; {new Date().getFullYear()} Screen 2 Text. All rights reserved.</p>
         </div>
       </div>
     </footer>
