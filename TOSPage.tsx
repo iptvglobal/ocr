@@ -14,12 +14,12 @@ const TOSPage: React.FC = () => {
           <h3>1. Use of Service</h3>
           <p>
             You agree to use the Service only for lawful purposes. You are prohibited from uploading any content that:
-            <ul>
-              <li>Is illegal, harmful, or infringes on the rights of others.</li>
-              <li>Contains viruses or other malicious code.</li>
-              <li>Is intended to disrupt or overwhelm our service infrastructure.</li>
-            </ul>
           </p>
+          <ul>
+            <li>Is illegal, harmful, or infringes on the rights of others.</li>
+            <li>Contains viruses or other malicious code.</li>
+            <li>Is intended to disrupt or overwhelm our service infrastructure.</li>
+          </ul>
           
           <h3>2. Intellectual Property</h3>
           <p>

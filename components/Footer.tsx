@@ -66,8 +66,8 @@ export const Footer: React.FC<FooterProps> = ({ navigate, currentPath }) => {
               <div className="mt-12 md:mt-0">
                 <h3 className="text-sm font-semibold text-gray-300 tracking-wider uppercase">Legal</h3>
                 <ul className="mt-4 space-y-4">
-                  <FooterLink path="/privacy">Privacy Policy</FooterLink>
-                  <FooterLink path="/tos">Terms of Service</FooterLink>
+                  <FooterLink path="/Privacy-Policy">Privacy Policy</FooterLink>
+                  <FooterLink path="/Terms-of-Service">Terms of Service</FooterLink>
                 </ul>
               </div>
             </div>

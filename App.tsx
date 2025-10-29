@@ -36,9 +36,9 @@ const App: React.FC = () => {
         return <AboutPage />;
       case '/faq':
         return <FAQPage />;
-      case '/privacy':
+      case '/Privacy-Policy':
         return <PrivacyPage />;
-      case '/tos':
+      case '/Terms-of-Service':
         return <TOSPage />;
       default:
         return <HomePage navigate={navigate} />; // Fallback to home for 404
