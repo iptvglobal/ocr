@@ -1,4 +1,5 @@
-import React, { useState, useCallback, useEffect } from 'react';
+
+import React, { useState, useCallback } from 'react';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import HomePage from './HomePage';
@@ -6,54 +7,44 @@ import AboutPage from './AboutPage';
 import FAQPage from './FAQPage';
 import PrivacyPage from './PrivacyPage';
 import TOSPage from './TOSPage';
+import ContactPage from './ContactPage';
 
-const App: React.FC = () => {
-  const [currentPath, setCurrentPath] = useState(window.location.pathname);
+function App() {
+  const [currentPage, setCurrentPage] = useState('home');
 
-  const navigate = useCallback((path: string) => {
-    window.history.pushState({}, '', path);
-    setCurrentPath(path);
+  const navigate = useCallback((page: string) => {
+    setCurrentPage(page);
     window.scrollTo(0, 0);
   }, []);
 
-  useEffect(() => {
-    const handlePopState = () => {
-      setCurrentPath(window.location.pathname);
-    };
-
-    window.addEventListener('popstate', handlePopState);
-
-    return () => {
-      window.removeEventListener('popstate', handlePopState);
-    };
-  }, []);
-
   const renderPage = () => {
-    switch (currentPath) {
-      case '/':
+    switch (currentPage) {
+      case 'home':
         return <HomePage navigate={navigate} />;
-      case '/about':
+      case 'about':
         return <AboutPage />;
-      case '/faq':
+      case 'faq':
         return <FAQPage />;
-      case '/Privacy-Policy':
+      case 'privacy':
         return <PrivacyPage />;
-      case '/Terms-of-Service':
+      case 'tos':
         return <TOSPage />;
+      case 'contact':
+        return <ContactPage />;
       default:
-        return <HomePage navigate={navigate} />; // Fallback to home for 404
+        return <HomePage navigate={navigate} />;
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100 flex flex-col">
-      <Navbar navigate={navigate} currentPath={currentPath} />
+    <div className="bg-gray-900 text-white min-h-screen font-sans flex flex-col">
+      <Navbar navigate={navigate} />
       <main className="flex-grow">
         {renderPage()}
       </main>
-      <Footer navigate={navigate} currentPath={currentPath} />
+      <Footer navigate={navigate} />
     </div>
   );
-};
+}
 
 export default App;
