@@ -13,7 +13,7 @@ export const ToolHeader: React.FC = () => {
       <div className="flex items-center justify-center space-x-3">
         <SparklesIcon />
         <h1 className="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-500">
-          Screen 2 Text
+          mosagraphic
         </h1>
       </div>
     </header>

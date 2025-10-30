@@ -28,7 +28,7 @@ export const Navbar: React.FC<NavbarProps> = ({ navigate }) => {
                     <div className="flex items-center">
                         <button onClick={() => navigate('home')} className="flex-shrink-0 flex items-center space-x-2 text-white">
                             <SparklesIcon />
-                            <span className="font-bold text-xl">Screen 2 Text</span>
+                            <span className="font-bold text-xl">mosagraphic</span>
                         </button>
                     </div>
                     <div className="hidden md:block">

@@ -1,5 +1,7 @@
-
 import React from 'react';
+import { TwitterIcon } from './icons/TwitterIcon';
+import { FacebookIcon } from './icons/FacebookIcon';
+import { LinkedInIcon } from './icons/LinkedInIcon';
 
 interface FooterProps {
     navigate: (page: string) => void;
@@ -12,6 +14,12 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
         { name: 'Privacy Policy', path: 'privacy' },
         { name: 'Terms of Service', path: 'tos' },
         { name: 'FAQ', path: 'faq' },
+    ];
+
+    const socialLinks = [
+        { name: 'Twitter', href: 'https://twitter.com/mosagraphic', icon: <TwitterIcon /> },
+        { name: 'Facebook', href: 'https://facebook.com/mosagraphic', icon: <FacebookIcon /> },
+        { name: 'LinkedIn', href: 'https://linkedin.com/company/mosagraphic', icon: <LinkedInIcon /> },
     ];
 
     return (
@@ -29,9 +37,17 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
                         </div>
                     ))}
                 </nav>
+                <div className="mt-8 flex justify-center space-x-6">
+                    {socialLinks.map((item) => (
+                        <a key={item.name} href={item.href} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 transition-colors">
+                            <span className="sr-only">{item.name}</span>
+                            {item.icon}
+                        </a>
+                    ))}
+                </div>
                 <div className="mt-8">
                     <p className="text-center text-base text-gray-400">
-                        &copy; {new Date().getFullYear()} Screen 2 Text. All rights reserved.
+                        &copy; {new Date().getFullYear()} mosagraphic. All rights reserved.
                     </p>
                 </div>
             </div>

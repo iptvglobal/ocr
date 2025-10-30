@@ -19,7 +19,7 @@ const AboutPage: React.FC = () => {
         <div className="prose prose-invert prose-lg mx-auto">
           <h3>Our Technology</h3>
           <p>
-            Screen 2 Text stands on the shoulders of giants. We leverage a modern, powerful tech stack to deliver a fast, reliable, and secure experience.
+            mosagraphic stands on the shoulders of giants. We leverage a modern, powerful tech stack to deliver a fast, reliable, and secure experience.
           </p>
           <ul>
             <li><strong>Google Gemini API:</strong> The core of our application. We use the 'gemini-2.5-flash' model for its exceptional speed and accuracy in multimodal understanding, allowing us to perform both OCR and complex translation tasks with state-of-the-art precision.</li>

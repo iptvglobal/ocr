@@ -1,6 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const TOSPage: React.FC = () => {
+  useEffect(() => {
+    const meta = document.createElement('meta');
+    meta.name = 'robots';
+    meta.content = 'noindex, nofollow';
+    document.head.appendChild(meta);
+
+    return () => {
+      document.head.removeChild(meta);
+    };
+  }, []);
+
   return (
     <div className="py-16 sm:py-24 bg-gray-900">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -9,7 +20,7 @@ const TOSPage: React.FC = () => {
           <p className="mt-4 text-lg text-gray-300">Last updated: {new Date().toLocaleDateString()}</p>
         </div>
         <div className="prose prose-invert prose-lg mx-auto text-gray-300 leading-relaxed">
-          <p>By accessing and using Screen 2 Text (the "Service"), you agree to be bound by these Terms of Service ("Terms"). If you disagree with any part of the terms, you may not access the Service.</p>
+          <p>By accessing and using mosagraphic (the "Service"), you agree to be bound by these Terms of Service ("Terms"). If you disagree with any part of the terms, you may not access the Service.</p>
           
           <h3>1. Use of Service</h3>
           <p>
@@ -33,7 +44,7 @@ const TOSPage: React.FC = () => {
 
           <h3>4. Limitation of Liability</h3>
           <p>
-            In no event shall Screen 2 Text, nor its directors, employees, or partners, be liable for any indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from your access to or use of or inability to access or use the Service.
+            In no event shall mosagraphic, nor its directors, employees, or partners, be liable for any indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from your access to or use of or inability to access or use the Service.
           </p>
 
           <h3>5. Third-Party Services</h3>

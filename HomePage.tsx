@@ -1,7 +1,9 @@
+
 import React, { useState, useCallback, useEffect } from 'react';
 import { ImageUploader } from './components/ImageUploader';
 import { LanguageSelector } from './components/LanguageSelector';
 import { ResultDisplay } from './components/ResultDisplay';
+import { ShareComponent } from './components/ShareComponent';
 import { extractTextFromImage, translateText } from './services/geminiService';
 import { fileToGenerativePart } from './utils/imageUtils';
 import { LANGUAGES } from './constants';
@@ -60,6 +62,42 @@ const TestimonialCard: React.FC<{ quote: string, name: string, role: string }> =
     </div>
 );
 
+const FounderSection: React.FC = () => (
+  <section className="bg-gray-900/30 backdrop-blur-sm border border-gray-800 rounded-2xl py-12 sm:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="max-w-4xl mx-auto text-center">
+      <div className="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 mb-6 flex items-center justify-center ring-4 ring-gray-700">
+         <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+         </svg>
+      </div>
+      <h2 className="text-3xl font-extrabold text-white sm:text-4xl">A Message From the Founder</h2>
+      <div className="mt-8 prose prose-invert prose-lg mx-auto text-gray-300 space-y-6">
+        <p>
+          Hi, I’m Aymen Lasfar, the creator of this mosagraphic image to text platform.
+          From the beginning, my goal was simple: make it unbelievably easy for everyone to extract and translate text from any image — fast, accurate, and completely free.
+        </p>
+        <p>
+          We’re proud of how far this project has come, trusted by thousands of people worldwide who use our image to text and image to text translator tools every single day. But this is only the start.
+        </p>
+        <p>
+          Our team is working hard to develop new features, expand our translation capabilities, and add even more services to help you do more — effortlessly. Each update will push performance, speed, and accuracy to new levels.
+        </p>
+        <p>
+          Thank you for supporting what we’re building. Every uploaded image and every bit of feedback helps our technology learn and improve. We’re excited to keep growing with you — and to make sure your picture to text experience stays the best on the web.
+        </p>
+      </div>
+      <div className="mt-8">
+        <p className="text-lg font-semibold text-white">
+          — Aymen Lasfar
+        </p>
+        <p className="text-indigo-300">
+          Founder & Owner, mosagraphic
+        </p>
+      </div>
+    </div>
+  </section>
+);
+
 
 const HomePage: React.FC<HomePageProps> = ({ navigate }) => {
     const [imageFile, setImageFile] = useState<File | null>(null);
@@ -70,25 +108,6 @@ const HomePage: React.FC<HomePageProps> = ({ navigate }) => {
     const [isExtracting, setIsExtracting] = useState<boolean>(false);
     const [isTranslating, setIsTranslating] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-    const [scrollPosition, setScrollPosition] = useState(0);
-
-    useEffect(() => {
-        const handleMouseMove = (event: MouseEvent) => {
-            setMousePosition({ x: event.clientX, y: event.clientY });
-        };
-        const handleScroll = () => {
-            setScrollPosition(window.scrollY);
-        };
-
-        window.addEventListener('mousemove', handleMouseMove);
-        window.addEventListener('scroll', handleScroll);
-
-        return () => {
-            window.removeEventListener('mousemove', handleMouseMove);
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
 
     const handleImageSelect = (file: File) => {
         setImageFile(file);
@@ -147,11 +166,6 @@ const HomePage: React.FC<HomePageProps> = ({ navigate }) => {
         document.getElementById('tool')?.scrollIntoView({ behavior: 'smooth' });
     };
 
-    const blob1X = (mousePosition.x / window.innerWidth - 0.5) * -50;
-    const blob1Y = (mousePosition.y / window.innerHeight - 0.5) * -50;
-    const blob2X = (mousePosition.x / window.innerWidth - 0.5) * 30;
-    const blob2Y = (mousePosition.y / window.innerHeight - 0.5) * 30;
-
   return (
     <div className="space-y-24 md:space-y-32 pb-24">
       {/* Hero Section */}
@@ -159,26 +173,22 @@ const HomePage: React.FC<HomePageProps> = ({ navigate }) => {
         <div className="absolute inset-0 -z-10">
             <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/30 via-gray-900 to-purple-900/30 bg-[size:200%_200%] animate-aurora"></div>
              <div 
-                className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl opacity-50 animate-blob-pulse transition-transform duration-500 ease-out"
-                style={{ transform: `translate(${blob1X}px, ${blob1Y}px)`}}
+                className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl opacity-50 animate-blob-pulse"
               ></div>
             <div 
-                className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl opacity-50 animate-blob-pulse animation-delay-4000 transition-transform duration-500 ease-out"
-                style={{ transform: `translate(${blob2X}px, ${blob2Y}px)`}}
+                className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl opacity-50 animate-blob-pulse animation-delay-4000"
             ></div>
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 
-            className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-white to-purple-300 transition-transform duration-300 ease-out"
-            style={{ transform: `translateY(${scrollPosition * 0.2}px)` }}
+            className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-white to-purple-300"
           >
-            Experience AI-Powered OCR That Unsparingly Changes Your Workflow
+            Image to Text Tool: Extract, Edit, and Translate Instantly
           </h1>
           <p 
-            className="mt-6 max-w-3xl mx-auto text-lg sm:text-xl text-gray-300 transition-transform duration-300 ease-out"
-            style={{ transform: `translateY(${scrollPosition * 0.1}px)` }}
+            className="mt-6 max-w-3xl mx-auto text-lg sm:text-xl text-gray-300"
           >
-            Transform any visual content into editable text in seconds.
+            Transform any visual content into editable text in seconds, Start Now.
           </p>
            <p className="mt-4 text-sm text-indigo-300 tracking-wider">
             AI-Powered OCR Technology &nbsp; | &nbsp; 99.9% Accuracy &nbsp; | &nbsp; 100+ Languages Supported
@@ -231,7 +241,7 @@ const HomePage: React.FC<HomePageProps> = ({ navigate }) => {
             )}
 
             <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
-            <ResultDisplay title="Extracted Text" text={extractedText} isLoading={isExtracting} />
+            <ResultDisplay title="Extracted Text" text={extractedText} isLoading={isExtracting} showShareButton={true} />
             <div className="flex flex-col space-y-4">
                 {extractedText && (
                     <div className="w-full p-4 bg-gray-800 rounded-xl shadow-lg border border-gray-700 flex flex-col md:flex-row items-center gap-4">
@@ -255,6 +265,10 @@ const HomePage: React.FC<HomePageProps> = ({ navigate }) => {
                 <ResultDisplay title="Translated Text" text={translatedText} isLoading={isTranslating} />
             </div>
             </div>
+
+            {extractedText && !isExtracting && (
+                 <ShareComponent shareUrl="https://mosagraphic.com" shareText="Check out this awesome AI Image to Text tool from mosagraphic!" />
+            )}
         </div>
       </section>
       
@@ -359,6 +373,8 @@ const HomePage: React.FC<HomePageProps> = ({ navigate }) => {
         </div>
       </section>
 
+      {/* Founder Section */}
+      <FounderSection />
 
       {/* Final CTA Section */}
        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -373,7 +389,7 @@ const HomePage: React.FC<HomePageProps> = ({ navigate }) => {
                         onClick={handleCtaClick}
                         className="px-8 py-4 border border-transparent text-lg font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-100 transition-colors shadow-lg shadow-white/10 transform hover:scale-105"
                     >
-                        Use Screen 2 Text Now
+                        Use mosagraphic Now
                     </button>
                  </div>
             </div>

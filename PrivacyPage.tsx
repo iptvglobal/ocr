@@ -1,6 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const PrivacyPage: React.FC = () => {
+  useEffect(() => {
+    const meta = document.createElement('meta');
+    meta.name = 'robots';
+    meta.content = 'noindex, nofollow';
+    document.head.appendChild(meta);
+
+    return () => {
+      document.head.removeChild(meta);
+    };
+  }, []);
+
   return (
     <div className="py-16 sm:py-24 bg-gray-900">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -9,7 +20,7 @@ const PrivacyPage: React.FC = () => {
           <p className="mt-4 text-lg text-gray-300">Last updated: {new Date().toLocaleDateString()}</p>
         </div>
         <div className="prose prose-invert prose-lg mx-auto text-gray-300 leading-relaxed">
-          <p>Your privacy is important to us. It is Screen 2 Text's policy to respect your privacy regarding any information we may process while operating our website.</p>
+          <p>Your privacy is important to us. It is mosagraphic's policy to respect your privacy regarding any information we may process while operating our website.</p>
 
           <h3>Data We Process</h3>
           <p>

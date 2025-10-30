@@ -1,11 +1,13 @@
 
 import React, { useState, useEffect } from 'react';
 import { ClipboardIcon } from './icons/ClipboardIcon';
+import { ShareIcon } from './icons/ShareIcon';
 
 interface ResultDisplayProps {
   title: string;
   text: string;
   isLoading: boolean;
+  showShareButton?: boolean;
 }
 
 const SkeletonLoader: React.FC = () => (
@@ -16,7 +18,7 @@ const SkeletonLoader: React.FC = () => (
   </div>
 );
 
-export const ResultDisplay: React.FC<ResultDisplayProps> = ({ title, text, isLoading }) => {
+export const ResultDisplay: React.FC<ResultDisplayProps> = ({ title, text, isLoading, showShareButton = false }) => {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
@@ -32,19 +34,45 @@ export const ResultDisplay: React.FC<ResultDisplayProps> = ({ title, text, isLoa
       setCopied(true);
     }
   };
+  
+  const handleShare = async () => {
+    if (navigator.share && text) {
+      try {
+        await navigator.share({
+          title: 'Extracted Text from mosagraphic',
+          text: text,
+        });
+      } catch (error) {
+        console.error('Error sharing:', error);
+      }
+    }
+  };
+
 
   return (
     <div className="w-full bg-gray-800 rounded-xl shadow-lg border border-gray-700 p-4 relative min-h-[150px] flex flex-col">
       <div className="flex justify-between items-center mb-2">
         <h3 className="text-lg font-semibold text-gray-200">{title}</h3>
-        <button
-          onClick={handleCopy}
-          disabled={!text || isLoading}
-          className="p-1.5 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500 text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-          aria-label="Copy to clipboard"
-        >
-          <ClipboardIcon copied={copied} />
-        </button>
+        <div className="flex items-center space-x-2">
+            {showShareButton && typeof navigator.share !== 'undefined' && (
+              <button
+                onClick={handleShare}
+                disabled={!text || isLoading}
+                className="p-1.5 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500 text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                aria-label="Share extracted text"
+              >
+                <ShareIcon />
+              </button>
+            )}
+            <button
+              onClick={handleCopy}
+              disabled={!text || isLoading}
+              className="p-1.5 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500 text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              aria-label="Copy to clipboard"
+            >
+              <ClipboardIcon copied={copied} />
+            </button>
+        </div>
       </div>
       <div className="flex-grow bg-gray-900/50 p-3 rounded-md text-gray-300 overflow-y-auto whitespace-pre-wrap text-sm">
         {isLoading ? <SkeletonLoader /> : text || <span className="text-gray-500">Results will appear here...</span>}
