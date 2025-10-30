@@ -16,7 +16,30 @@
       tailwind.config = {
         theme: {
           extend: {
-            // custom theme extensions if any
+            keyframes: {
+              'pulse-slow': {
+                '0%, 100%': { opacity: 0.5, transform: 'scale(1)' },
+                '50%': { opacity: 0.8, transform: 'scale(1.05)' },
+              },
+              'spin-slow': {
+                '0%': { transform: 'rotate(0deg)' },
+                '100%': { transform: 'rotate(360deg)' },
+              },
+              'aurora': {
+                'from': { backgroundPosition: '0% 50%' },
+                'to': { backgroundPosition: '100% 50%' },
+              },
+              'blob-pulse': {
+                '0%, 100%': { transform: 'scale(1) rotate(0deg)' },
+                '50%': { transform: 'scale(1.1) rotate(5deg)' },
+              }
+            },
+            animation: {
+              'pulse-slow': 'pulse-slow 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'spin-slow': 'spin-slow 25s linear infinite',
+              'aurora': 'aurora 15s ease infinite alternate',
+              'blob-pulse': 'blob-pulse 12s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            }
           }
         }
       }

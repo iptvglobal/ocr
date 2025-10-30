@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { ImageUploader } from './components/ImageUploader';
 import { LanguageSelector } from './components/LanguageSelector';
 import { ResultDisplay } from './components/ResultDisplay';
@@ -12,7 +12,7 @@ interface HomePageProps {
 }
 
 const ServiceCard: React.FC<{ icon: React.ReactNode, title: string, description: string, features: string[], cta: string, onCtaClick: () => void }> = ({ icon, title, description, features, cta, onCtaClick }) => (
-    <div className="bg-gray-800/50 p-6 rounded-lg border border-gray-700 transition-all duration-300 hover:border-indigo-500 hover:bg-gray-800 transform hover:-translate-y-1 flex flex-col">
+    <div className="bg-gray-800/30 backdrop-blur-lg p-6 rounded-2xl border border-white/10 transition-all duration-300 hover:border-indigo-500/50 hover:-translate-y-2 transform flex flex-col h-full">
         <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white mb-4">
             {icon}
         </div>
@@ -33,27 +33,29 @@ const ServiceCard: React.FC<{ icon: React.ReactNode, title: string, description:
 );
 
 const HowItWorksStep: React.FC<{ step: string, title: string, description: string, icon: React.ReactNode }> = ({ step, title, description, icon }) => (
-    <div className="relative flex flex-col items-center text-center p-6 bg-gray-800 rounded-lg">
-        <div className="absolute -top-6 bg-purple-600 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl border-4 border-gray-900">{step}</div>
-        <div className="mt-8 text-indigo-400">{icon}</div>
-        <h3 className="mt-4 text-xl font-bold">{title}</h3>
+    <div className="relative flex-1 flex flex-col items-center text-center p-6 bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700">
+        <div className="flex items-center justify-center h-16 w-16 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 text-white mb-4 border-4 border-gray-900">
+            {icon}
+        </div>
+        <h3 className="text-xl font-bold"><span className="text-purple-400">{step}:</span> {title}</h3>
         <p className="mt-2 text-gray-400">{description}</p>
     </div>
 );
 
-const FeatureBlock: React.FC<{ icon: React.ReactNode, title: string, children: React.ReactNode, reverse?: boolean }> = ({ icon, title, children, reverse = false }) => (
-    <div className={`grid md:grid-cols-2 gap-8 items-center ${reverse ? 'md:grid-flow-col-dense' : ''}`}>
-        <div className={`p-8 bg-gray-800/50 rounded-lg border border-gray-700 ${reverse ? 'md:col-start-2' : ''}`}>
-            <div className="flex items-center space-x-4 mb-4">
-                <span className="text-3xl">{icon}</span>
-                <h3 className="text-2xl font-bold text-white">{title}</h3>
-            </div>
-            <p className="text-gray-400 leading-relaxed">{children}</p>
-        </div>
-        <div className={`flex items-center justify-center ${reverse ? 'md:col-start-1' : ''}`}>
-             <div className="w-full h-64 bg-gray-800 rounded-lg flex items-center justify-center border border-indigo-500/30">
-                <p className="text-indigo-400 text-5xl opacity-50">{icon}</p>
-            </div>
+const FeatureCard: React.FC<{ icon: string; title: string; children: React.ReactNode }> = ({ icon, title, children }) => (
+    <div className="bg-gray-800/30 backdrop-blur-lg border border-white/10 rounded-2xl p-6 transition-all duration-300 hover:border-indigo-500/50 hover:-translate-y-2 transform cursor-pointer">
+        <div className="text-3xl mb-4">{icon}</div>
+        <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
+        <p className="text-gray-400 leading-relaxed">{children}</p>
+    </div>
+);
+
+const TestimonialCard: React.FC<{ quote: string, name: string, role: string }> = ({ quote, name, role }) => (
+    <div className="bg-gray-800/50 backdrop-blur-lg p-6 rounded-2xl border border-white/10 h-full flex flex-col">
+        <p className="text-gray-300 flex-grow">“{quote}”</p>
+        <div className="mt-4 pt-4 border-t border-gray-700">
+            <p className="font-bold text-white">{name}</p>
+            <p className="text-sm text-indigo-300">{role}</p>
         </div>
     </div>
 );
@@ -68,6 +70,25 @@ const HomePage: React.FC<HomePageProps> = ({ navigate }) => {
     const [isExtracting, setIsExtracting] = useState<boolean>(false);
     const [isTranslating, setIsTranslating] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
+    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+    const [scrollPosition, setScrollPosition] = useState(0);
+
+    useEffect(() => {
+        const handleMouseMove = (event: MouseEvent) => {
+            setMousePosition({ x: event.clientX, y: event.clientY });
+        };
+        const handleScroll = () => {
+            setScrollPosition(window.scrollY);
+        };
+
+        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
 
     const handleImageSelect = (file: File) => {
         setImageFile(file);
@@ -126,16 +147,41 @@ const HomePage: React.FC<HomePageProps> = ({ navigate }) => {
         document.getElementById('tool')?.scrollIntoView({ behavior: 'smooth' });
     };
 
+    const blob1X = (mousePosition.x / window.innerWidth - 0.5) * -50;
+    const blob1Y = (mousePosition.y / window.innerHeight - 0.5) * -50;
+    const blob2X = (mousePosition.x / window.innerWidth - 0.5) * 30;
+    const blob2Y = (mousePosition.y / window.innerHeight - 0.5) * 30;
+
   return (
     <div className="space-y-24 md:space-y-32 pb-24">
       {/* Hero Section */}
-      <section className="pt-20 pb-10">
+      <section className="relative pt-20 pb-10 overflow-hidden">
+        <div className="absolute inset-0 -z-10">
+            <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/30 via-gray-900 to-purple-900/30 bg-[size:200%_200%] animate-aurora"></div>
+             <div 
+                className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl opacity-50 animate-blob-pulse transition-transform duration-500 ease-out"
+                style={{ transform: `translate(${blob1X}px, ${blob1Y}px)`}}
+              ></div>
+            <div 
+                className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl opacity-50 animate-blob-pulse animation-delay-4000 transition-transform duration-500 ease-out"
+                style={{ transform: `translate(${blob2X}px, ${blob2Y}px)`}}
+            ></div>
+        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-500">
-            Transform Any Visual Content Into Editable Text in Seconds
+          <h1 
+            className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-white to-purple-300 transition-transform duration-300 ease-out"
+            style={{ transform: `translateY(${scrollPosition * 0.2}px)` }}
+          >
+            Experience AI-Powered OCR That Unsparingly Changes Your Workflow
           </h1>
-          <p className="mt-6 max-w-2xl mx-auto text-lg sm:text-xl text-gray-300">
-            AI-Powered OCR Technology | 99.9% Accuracy | 100+ Languages Supported. Turn screenshots, images, and documents into usable data instantly.
+          <p 
+            className="mt-6 max-w-3xl mx-auto text-lg sm:text-xl text-gray-300 transition-transform duration-300 ease-out"
+            style={{ transform: `translateY(${scrollPosition * 0.1}px)` }}
+          >
+            Transform any visual content into editable text in seconds.
+          </p>
+           <p className="mt-4 text-sm text-indigo-300 tracking-wider">
+            AI-Powered OCR Technology &nbsp; | &nbsp; 99.9% Accuracy &nbsp; | &nbsp; 100+ Languages Supported
           </p>
           <div className="mt-10">
             <button
@@ -148,12 +194,20 @@ const HomePage: React.FC<HomePageProps> = ({ navigate }) => {
         </div>
       </section>
 
+      {/* Intro Section */}
+       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p className="text-xl text-gray-300 leading-relaxed">
+                While effortless converters are available, we provide all-in-one OCR and translation services to creators, professionals, students, and developers needing speed, precision, and a global reach. 
+                Turn every image, every screenshot, and every document into text. Extract, edit, translate, and share—all with a single click.
+            </p>
+       </section>
+      
       {/* Tool Section */}
       <section id="tool" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-20">
         <div className="text-center mb-12">
-            <h2 className="text-3xl font-extrabold text-white sm:text-4xl">See The Magic Happen Live</h2>
-             <p className="mt-4 text-lg text-gray-400 max-w-2xl mx-auto">
-                Upload an image to instantly extract its text. After extraction, you can translate it into a language of your choice.
+            <h2 className="text-3xl font-extrabold text-white sm:text-4xl">Instant, Accurate, and Amazingly Simple</h2>
+             <p className="mt-4 text-lg text-gray-400 max-w-3xl mx-auto">
+                Imagine uploading an image to your browser and, almost instantaneously, receiving flawless text in return. With your browser as an interface, utilize the power of our AI-driven image-to-text engine.
             </p>
         </div>
         <div className="w-full flex flex-col items-center space-y-6">
@@ -203,18 +257,61 @@ const HomePage: React.FC<HomePageProps> = ({ navigate }) => {
             </div>
         </div>
       </section>
+      
+      {/* How It Works Section */}
+        <section id="how-it-works" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+                <h2 className="text-3xl font-extrabold text-white sm:text-4xl">Three Steps to Your Text</h2>
+            </div>
+            <div className="flex flex-col md:flex-row items-stretch justify-center gap-8 md:gap-4">
+                <HowItWorksStep step="1" title="Upload" description="Uploading a text image for processing is as simple as dragging and dropping a screenshot, photo, or scanned document of any type (JPG, PNG, or WEBP) into your browser." icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>} />
+                <div className="flex items-center justify-center">
+                    <div className="h-20 w-1 md:h-1 md:w-20 bg-gradient-to-b md:bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-50 rounded-full"></div>
+                </div>
+                <HowItWorksStep step="2" title="AI Processing" description="The system offers text recognition, language detection, and layout analysis. Each process is executed in milliseconds through optimized neural delivery, ensuring fast and seamless delivery." icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M12 19c-3.866 0-7-3.134-7-7s3.134-7 7-7 7 3.134 7 7-3.134 7-7 7z" /></svg>} />
+                <div className="flex items-center justify-center">
+                    <div className="h-20 w-1 md:h-1 md:w-20 bg-gradient-to-b md:bg-gradient-to-r from-transparent via-purple-500 to-transparent opacity-50 rounded-full"></div>
+                </div>
+                <HowItWorksStep step="3" title="Extract & Use" description="Edited extracted text is available for instant copying, translation, and export, aiding in research papers, business documentation, and language learning." icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>} />
+            </div>
+        </section>
 
+      {/* Features Grid Section */}
+      <section id="features" className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center">
+            <h2 className="text-3xl font-extrabold text-white sm:text-4xl">Rational in Design</h2>
+            <p className="mt-4 text-lg text-gray-400">A cluttered screen can be distracting; every function of our system is designed to preserve focus and increase productivity.</p>
+        </div>
+        <div className="relative mt-16">
+            <div className="absolute top-1/2 left-1/2 w-[40rem] h-[40rem] lg:w-[60rem] lg:h-[60rem] bg-gradient-to-br from-indigo-600/20 to-purple-600/20 -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl opacity-50 animate-pulse-slow pointer-events-none"></div>
+            <div className="relative grid grid-cols-1 md:grid-cols-2 gap-8">
+                <FeatureCard icon="⚡️" title="Process Documents in Pareto-optimal Time">
+                   Our OCR engine is 10x more efficient than the industry standard. Bulk-upload hundreds of images and get results in seconds. Average processing time: 0.8 seconds per page.
+                </FeatureCard>
+                <FeatureCard icon="🎯" title="Top-Notch OCR Accuracy">
+                    Achieve 99.9% accuracy with every conversion. Our AI trains on millions of data samples to handle cursive, handwritten, and multilingual documents with equal proficiency.
+                </FeatureCard>
+                <FeatureCard icon="🌍" title="Text Transformation in 100+ Languages">
+                    Global communication is instant, thanks to our built-in image to text translator. It translates texts in real time across 100+ languages, from English to Arabic, Chinese to Cyrillic.
+                </FeatureCard>
+                <FeatureCard icon="📐" title="Text After Conversion with Original Layout">
+                    No more headaches with reformatting. Tables, columns, and other complex layouts are preserved, giving you structured, ready-to-use documents.
+                </FeatureCard>
+            </div>
+        </div>
+      </section>
+      
       {/* Services Showcase Section */}
       <section id="services" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
          <div className="text-center mb-12">
             <h2 className="text-3xl font-extrabold text-white sm:text-4xl">One Tool, Limitless Applications</h2>
-            <p className="mt-4 text-lg text-gray-400">From screen to text, and image to data, we have you covered.</p>
+            <p className="mt-4 text-lg text-gray-400">This platform is designed for every use case from screen to document, picture to text, image to data.</p>
         </div>
         <div className="grid md:grid-cols-3 gap-8">
             <ServiceCard 
                 icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>}
                 title="Screen to Text Capture"
-                description="Instantly extract text from screenshots, presentations, and on-screen content with one click. Perfect for virtual meetings and research."
+                description="Instantly capture text from screen-shots, online presentations, or virtual meetings. Ideal for researchers, journalists, and students."
                 features={["Real-time capture", "Smart region selection", "Auto-sync to clipboard"]}
                 cta="Try Screen Capture →"
                 onCtaClick={handleCtaClick}
@@ -222,62 +319,79 @@ const HomePage: React.FC<HomePageProps> = ({ navigate }) => {
             <ServiceCard 
                 icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l-1-1a2 2 0 010-2.828l1-1a2 2 0 012.828 0l2 2A2 2 0 0119 12v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>}
                 title="Advanced Image to Text"
-                description="Convert photos, scanned documents, and image files into editable text formats. Industry-leading accuracy powered by AI."
+                description="Seamlessly convert photos, contracts, invoices, receipts, and scanned documents into editable formats with industry-leading accuracy."
                 features={["AI-powered recognition", "100+ language support", "Layout preservation"]}
-                cta="Upload Image →"
+                cta="Upload Your Image →"
                 onCtaClick={handleCtaClick}
             />
             <ServiceCard 
                 icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>}
                 title="Picture to Text Solutions"
-                description="Extract text from any picture format - from street signs to business cards. Multi-format support with instant results."
-                features={["Mobile photo processing", "Business card scanning", "Multi-format export"]}
+                description="Our system extracts everything cleanly and precisely, even from a handwritten note, a street sign or a business card. It's mobile-optimized for when inspiration strikes."
+                features={["Scan business cards", "Multifunctional export", "Batch image processing"]}
                 cta="Start Converting →"
                 onCtaClick={handleCtaClick}
             />
         </div>
       </section>
-      
-      {/* How It Works Section */}
-      <section id="how-it-works" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-            <h2 className="text-3xl font-extrabold text-white sm:text-4xl">Get Your Text in 3 Simple Steps</h2>
-            <p className="mt-4 text-lg text-gray-400">Effortless extraction from upload to output.</p>
+
+      {/* Testimonials Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+             <p className="text-lg text-indigo-300">Over half a million users save over 20 hours each week thanks to automated text extraction from images.</p>
         </div>
-        <div className="grid md:grid-cols-3 gap-8 md:gap-16">
-            <HowItWorksStep step="1" title="Upload" description="Drag & drop or browse for any image or screenshot." icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>} />
-            <HowItWorksStep step="2" title="AI Processing" description="Our Gemini-powered AI analyzes and extracts text with incredible accuracy." icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M12 19c-3.866 0-7-3.134-7-7s3.134-7 7-7 7 3.134 7 7-3.134 7-7 7z" /></svg>} />
-            <HowItWorksStep step="3" title="Extract & Use" description="Copy, edit, translate, or export your text instantly." icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>} />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <TestimonialCard 
+                quote="I converted hundreds of scanned invoices into editable spreadsheets in a single afternoon. What used to take days now takes minutes."
+                name="Daniel K."
+                role="Accountant"
+            />
+            <TestimonialCard 
+                quote="The built-in image to text translator saved my research! I extracted data from Japanese journals and instantly translated it."
+                name="Jack"
+                role="Researcher"
+            />
+            <TestimonialCard 
+                quote="It has enhanced collaboration among my design team during remote work in using scanned images to extract text from notes."
+                name="Amina L."
+                role="Creative Director"
+            />
         </div>
       </section>
 
-      {/* Features Grid Section */}
-      <section id="features" className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-        <div className="text-center">
-            <h2 className="text-3xl font-extrabold text-white sm:text-4xl">Powerful Features, Simple Interface</h2>
-            <p className="mt-4 text-lg text-gray-400">Everything you need for fast and accurate text extraction.</p>
-        </div>
-        <FeatureBlock icon="⚡️" title="Process Documents in Milliseconds">Our optimized engine processes files 10x faster than competitors. Bulk upload hundreds of images and get results in seconds, not minutes. Average processing time: 0.8 seconds per page.</FeatureBlock>
-        <FeatureBlock icon="🎯" title="Industry-Leading OCR Precision" reverse>Advanced AI algorithms ensure your picture-to-text conversions are pixel-perfect. Our screen-to-text technology learns from millions of documents to deliver 99.9% accuracy.</FeatureBlock>
-        <FeatureBlock icon="🌍" title="Convert Text in 100+ Languages">From English to Arabic, Chinese to Cyrillic—our image-to-text service recognizes global scripts with equal precision, breaking down language barriers effortlessly.</FeatureBlock>
-        <FeatureBlock icon="📐" title="Maintain Original Formatting" reverse>Tables, columns, and complex layouts stay intact during conversion. Get structured, ready-to-use documents without the hassle of reformatting.</FeatureBlock>
-      </section>
 
       {/* Final CTA Section */}
        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg p-8 md:p-12 text-center">
-                 <h2 className="text-3xl font-extrabold text-white sm:text-4xl">Ready to Transform Your Visual Content?</h2>
-                 <p className="mt-4 text-lg text-indigo-100">Join 500,000+ users who save 20+ hours per week.</p>
+            <div className="relative bg-gray-900/50 rounded-2xl p-8 md:p-12 text-center overflow-hidden border border-white/10">
+                <div className="absolute inset-0 -z-10">
+                    <div className="absolute top-1/2 left-1/2 w-[50rem] h-[50rem] bg-gradient-to-br from-indigo-600/30 to-purple-600/30 -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl opacity-70 animate-pulse-slow"></div>
+                </div>
+                 <h2 className="text-3xl font-extrabold text-white sm:text-4xl">Are You Prepared to Alter How You Handle Your Visual Data?</h2>
+                 <p className="mt-4 text-lg text-indigo-200">Your images contain hidden information. Let’s retrieve it! Stop retyping screenshots and automate the process with AI.</p>
                  <div className="mt-8">
                     <button
                         onClick={handleCtaClick}
-                        className="px-8 py-4 border border-transparent text-lg font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-100 transition-colors shadow-lg transform hover:scale-105"
+                        className="px-8 py-4 border border-transparent text-lg font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-100 transition-colors shadow-lg shadow-white/10 transform hover:scale-105"
                     >
-                        Try Screen 2 Text Now
+                        Use Screen 2 Text Now
                     </button>
                  </div>
             </div>
        </section>
+
+        {/* Technical Section */}
+        <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+             <h2 className="text-3xl font-extrabold text-white sm:text-4xl">Technical Innovation Leading the Way</h2>
+             <p className="mt-4 text-lg text-gray-400">At our core, we balance speed, accuracy, and contextual translation in our OCR engine. Our proprietary Neural Vision Pipeline, trained on over 40 million images, detects edge and contextual patterns for unparalleled precision.</p>
+             <div className="mt-8 text-left prose prose-invert prose-md mx-auto text-gray-300">
+                <ul>
+                    <li><strong>Adaptive Multilingual Recognition:</strong> The translator uses transformer-based models to adjust to spelling and regional variations instantly.</li>
+                    <li><strong>Auto Language Detection:</strong> Upload an image with multiple languages, and the AI will separate and identify each for translation.</li>
+                    <li><strong>Intelligent Post-processing:</strong> All outputs undergo punctuation adjustments and de-hyphenation for a final text that appears manually crafted.</li>
+                </ul>
+             </div>
+        </section>
+
     </div>
   );
 };

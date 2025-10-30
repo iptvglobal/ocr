@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback } from 'react';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
@@ -37,7 +36,7 @@ function App() {
   };
 
   return (
-    <div className="bg-gray-900 text-white min-h-screen font-sans flex flex-col">
+    <div className="bg-gray-900 text-white min-h-screen font-sans flex flex-col overflow-x-hidden">
       <Navbar navigate={navigate} />
       <main className="flex-grow">
         {renderPage()}
