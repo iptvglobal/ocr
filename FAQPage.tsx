@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AccordionItem } from './components/AccordionItem';
 
 const faqData = [
@@ -29,6 +29,24 @@ const faqData = [
 ];
 
 const FAQPage: React.FC = () => {
+    useEffect(() => {
+    const originalTitle = document.title;
+    const metaDesc = document.querySelector('meta[name="description"]');
+    const originalDescContent = metaDesc ? metaDesc.getAttribute('content') : null;
+    const metaRobots = document.querySelector('meta[name="robots"]');
+    const originalRobotsContent = metaRobots ? metaRobots.getAttribute('content') : null;
+
+    document.title = "FAQ - Frequently Asked Questions | mosagraphic";
+    if (metaDesc) metaDesc.setAttribute('content', "Find answers to common questions about our image-to-text tool, including data privacy, supported formats, accuracy, pricing, and usage limits.");
+    if (metaRobots) metaRobots.setAttribute('content', 'index, follow');
+
+    return () => {
+        document.title = originalTitle;
+        if (metaDesc && originalDescContent) metaDesc.setAttribute('content', originalDescContent);
+        if (metaRobots && originalRobotsContent) metaRobots.setAttribute('content', originalRobotsContent);
+    };
+  }, []);
+
   return (
     <div className="py-16 sm:py-24 bg-gray-900">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">

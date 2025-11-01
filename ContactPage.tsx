@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
 
@@ -17,6 +17,24 @@ const ContactPage: React.FC = () => {
   const [message, setMessage] = useState('');
   const [status, setStatus] = useState<FormStatus>('idle');
   const [formError, setFormError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const originalTitle = document.title;
+    const metaDesc = document.querySelector('meta[name="description"]');
+    const originalDescContent = metaDesc ? metaDesc.getAttribute('content') : null;
+    const metaRobots = document.querySelector('meta[name="robots"]');
+    const originalRobotsContent = metaRobots ? metaRobots.getAttribute('content') : null;
+
+    document.title = "Contact Us - Get in Touch | mosagraphic";
+    if (metaDesc) metaDesc.setAttribute('content', "We'd love to hear from you. Contact mosagraphic for questions about features, feedback, or support for our AI-powered image to text tool.");
+    if (metaRobots) metaRobots.setAttribute('content', 'index, follow');
+
+    return () => {
+        document.title = originalTitle;
+        if (metaDesc && originalDescContent) metaDesc.setAttribute('content', originalDescContent);
+        if (metaRobots && originalRobotsContent) metaRobots.setAttribute('content', originalRobotsContent);
+    };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
