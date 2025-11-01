@@ -172,7 +172,7 @@ const PrivacyPage: React.FC = () => {
           <h2 className="text-3xl sm:text-4xl font-bold text-white mt-10 mb-4">Contact Information</h2>
           <p>
             Mosagraphic<br />
-            Rua das Forças Armadas, Nº 133, 3ª Esquerdo, 4715-029 Braga<br />
+            Rua das Forças Armadas, Nº 133, 3º Esquerdo, 4715-029 Braga<br />
             Email:{" "}
             <a href="mailto:business@mosagraphic.com" className="text-indigo-400 hover:underline">
               business@mosagraphic.com
