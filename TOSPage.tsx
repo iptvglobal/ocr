@@ -16,46 +16,48 @@ const TOSPage: React.FC = () => {
     <div className="py-16 sm:py-24 bg-gray-900">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-extrabold text-white sm:text-5xl">Terms of Service</h1>
-          <p className="mt-4 text-lg text-gray-300">Last updated: {new Date().toLocaleDateString()}</p>
+          <h1 className="text-4xl font-extrabold text-white sm:text-5xl">Terms and Conditions</h1>
+          <p className="mt-4 text-lg text-gray-300">Effective Date: November 1, 2025</p>
         </div>
         <div className="prose prose-invert prose-lg mx-auto text-gray-300 leading-relaxed">
-          <p>By accessing and using mosagraphic (the "Service"), you agree to be bound by these Terms of Service ("Terms"). If you disagree with any part of the terms, you may not access the Service.</p>
+          <p>Welcome to our website. By using this site and its tools, you agree to the following terms and conditions. Please read them carefully.</p>
+
+          <h3>1. Acceptance of Terms</h3>
+          <p>By accessing or using our website and services, you agree to comply with these Terms and Conditions. If you do not agree, please do not use our site.</p>
           
-          <h3>1. Use of Service</h3>
-          <p>
-            You agree to use the Service only for lawful purposes. You are prohibited from uploading any content that:
-          </p>
+          <h3>2. Description of Service</h3>
+          <p>Our tool allows users to upload images that contain text, automatically extract that text, and edit or download it. The service is designed for educational, creative, and personal productivity purposes — not for altering or falsifying official documents or personal identification materials.</p>
+          
+          <h3>3. User Responsibilities</h3>
+          <p>You are responsible for all activities under your use of our tool. You agree not to upload or edit:</p>
           <ul>
-            <li>Is illegal, harmful, or infringes on the rights of others.</li>
-            <li>Contains viruses or other malicious code.</li>
-            <li>Is intended to disrupt or overwhelm our service infrastructure.</li>
+            <li>Any content that violates the law.</li>
+            <li>Scanned IDs, passports, payment cards, or other sensitive personal information.</li>
+            <li>Content that infringes on another’s rights or privacy.</li>
           </ul>
+          <p>We reserve the right to block or report any misuse of the service.</p>
+
+          <h3>4. Intellectual Property</h3>
+          <p>All software, content, and design elements on this site are owned by us or our licensors. You may not reproduce, distribute, or modify them without permission.</p>
+
+          <h3>5. Disclaimer of Warranties</h3>
+          <p>The service is provided “as is” and “as available.” We do not guarantee that it will be error-free, uninterrupted, or that all text extraction results will be accurate.</p>
+
+          <h3>6. Limitation of Liability</h3>
+          <p>We are not responsible for any direct or indirect damages, data loss, or misuse of the service. Use of this tool is entirely at your own risk.</p>
+
+          <h3>7. Privacy</h3>
+          <p>We respect your privacy. Uploaded images may be temporarily processed but are not stored permanently. For more information, please refer to our <a href="/privacy-policy" className="text-indigo-400 hover:underline">Privacy Policy</a>.</p>
           
-          <h3>2. Intellectual Property</h3>
-          <p>
-            The content you upload remains your property. By using the Service, you grant us a temporary, non-exclusive license to process your content as necessary to provide the text extraction and translation functionality. This license terminates immediately after the processing is complete.
-          </p>
+          <h3>8. Modifications to Terms</h3>
+          <p>We may update these Terms at any time. Updates will be posted on this page with a new effective date.</p>
           
-          <h3>3. Disclaimer of Warranties</h3>
-          <p>
-            The Service is provided "as is" and "as available" without any warranties of any kind, either express or implied. We do not warrant that the Service will be uninterrupted, error-free, or that the results obtained from the use of the Service will be accurate or reliable. You acknowledge that the quality of the output is highly dependent on the quality of the input image.
-          </p>
+          <h3>9. Governing Law</h3>
+          <p>These Terms are governed by the laws of Portugal and applicable EU regulations.</p>
 
-          <h3>4. Limitation of Liability</h3>
-          <p>
-            In no event shall mosagraphic, nor its directors, employees, or partners, be liable for any indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from your access to or use of or inability to access or use the Service.
-          </p>
-
-          <h3>5. Third-Party Services</h3>
-          <p>
-            Our Service utilizes the Google Gemini API. Your use of our Service is therefore also subject to Google's Terms of Service. We are not responsible for the practices or policies of third-party services.
-          </p>
-
-          <h3>6. Changes to Terms</h3>
-          <p>
-            We reserve the right, at our sole discretion, to modify or replace these Terms at any time. We will provide notice of any changes by posting the new Terms of Service on this page.
-          </p>
+          <h3>10. Contact</h3>
+          <p>If you have any questions, please contact us at:</p>
+          <p>Email: <a href="mailto:support@mosagraphic.xyz" className="text-indigo-400 hover:underline">support@mosagraphic.xyz</a></p>
         </div>
       </div>
     </div>
