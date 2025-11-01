@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React from 'react';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import HomePage from './HomePage';
@@ -9,39 +9,33 @@ import TOSPage from './TOSPage';
 import ContactPage from './ContactPage';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('home');
-
-  const navigate = useCallback((page: string) => {
-    setCurrentPage(page);
-    window.scrollTo(0, 0);
-  }, []);
-
   const renderPage = () => {
-    switch (currentPage) {
-      case 'home':
-        return <HomePage navigate={navigate} />;
-      case 'about':
+    const path = window.location.pathname;
+    switch (path) {
+      case '/about':
         return <AboutPage />;
-      case 'faq':
+      case '/faq':
         return <FAQPage />;
-      case 'privacy':
+      case '/privacy-policy':
         return <PrivacyPage />;
-      case 'tos':
+      case '/terms-of-service':
         return <TOSPage />;
-      case 'contact':
+      case '/contact':
         return <ContactPage />;
+      case '/':
       default:
-        return <HomePage navigate={navigate} />;
+        // Render HomePage for the root path or any unknown paths
+        return <HomePage />;
     }
   };
 
   return (
     <div className="bg-gray-900 text-white min-h-screen font-sans flex flex-col overflow-x-hidden">
-      <Navbar navigate={navigate} />
+      <Navbar />
       <main className="flex-grow">
         {renderPage()}
       </main>
-      <Footer navigate={navigate} />
+      <Footer />
     </div>
   );
 }

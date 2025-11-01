@@ -3,17 +3,13 @@ import { TwitterIcon } from './icons/TwitterIcon';
 import { FacebookIcon } from './icons/FacebookIcon';
 import { LinkedInIcon } from './icons/LinkedInIcon';
 
-interface FooterProps {
-    navigate: (page: string) => void;
-}
-
-export const Footer: React.FC<FooterProps> = ({ navigate }) => {
+export const Footer: React.FC = () => {
     const footerLinks = [
-        { name: 'About', path: 'about' },
-        { name: 'Contact', path: 'contact' },
-        { name: 'Privacy Policy', path: 'privacy' },
-        { name: 'Terms of Service', path: 'tos' },
-        { name: 'FAQ', path: 'faq' },
+        { name: 'About', href: '/about' },
+        { name: 'Contact', href: '/contact' },
+        { name: 'Privacy Policy', href: '/privacy-policy' },
+        { name: 'Terms of Service', href: '/terms-of-service' },
+        { name: 'FAQ', href: '/faq' },
     ];
 
     const socialLinks = [
@@ -28,12 +24,12 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
                 <nav className="flex flex-wrap justify-center -mx-5 -my-2" aria-label="Footer">
                     {footerLinks.map((link) => (
                         <div key={link.name} className="px-5 py-2">
-                            <button
-                                onClick={() => navigate(link.path)}
+                            <a
+                                href={link.href}
                                 className="text-base text-gray-400 hover:text-gray-300 transition-colors"
                             >
                                 {link.name}
-                            </button>
+                            </a>
                         </div>
                     ))}
                 </nav>

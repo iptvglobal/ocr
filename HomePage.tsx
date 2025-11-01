@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback, useEffect } from 'react';
 import { ImageUploader } from './components/ImageUploader';
 import { LanguageSelector } from './components/LanguageSelector';
@@ -9,17 +8,15 @@ import { fileToGenerativePart } from './utils/imageUtils';
 import { LANGUAGES } from './constants';
 
 
-interface HomePageProps {
-  navigate: (path: string) => void;
-}
+interface HomePageProps {}
 
-const ServiceCard: React.FC<{ icon: React.ReactNode, title: string, description: string, features: string[], cta: string, onCtaClick: () => void }> = ({ icon, title, description, features, cta, onCtaClick }) => (
+const ServiceCard: React.FC<{ icon: React.ReactNode, title: string, description: React.ReactNode, features: string[], cta: string, onCtaClick: () => void }> = ({ icon, title, description, features, cta, onCtaClick }) => (
     <div className="bg-gray-800/30 backdrop-blur-lg p-6 rounded-2xl border border-white/10 transition-all duration-300 hover:border-indigo-500/50 hover:-translate-y-2 transform flex flex-col h-full">
         <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white mb-4">
             {icon}
         </div>
         <h3 className="text-xl font-bold text-white">{title}</h3>
-        <p className="mt-2 text-gray-400 flex-grow">{description}</p>
+        <div className="mt-2 text-gray-400 flex-grow">{description}</div>
         <ul className="mt-4 space-y-2 text-gray-300">
             {features.map((feature, i) => (
                 <li key={i} className="flex items-start">
@@ -73,17 +70,13 @@ const FounderSection: React.FC = () => (
       <h2 className="text-3xl font-extrabold text-white sm:text-4xl">A Message From the Founder</h2>
       <div className="mt-8 prose prose-invert prose-lg mx-auto text-gray-300 space-y-6">
         <p>
-          Hi, I’m Aymen Lasfar, the creator of this mosagraphic image to text platform.
-          From the beginning, my goal was simple: make it unbelievably easy for everyone to extract and translate text from any image — fast, accurate, and completely free.
+          Hello, I’m Aymen Lasfar, the creator of this mosagraphic Image-to-Text platform. Let me tell you, I wanted to make the experience as simple as possible for everyone to extract and translate any text from any image. Fast, accurate, and free.
         </p>
         <p>
-          We’re proud of how far this project has come, trusted by thousands of people worldwide who use our image to text and image to text translator tools every single day. But this is only the start.
+          We take pride in the work we have completed, being trusted by thousands as users daily on the image to text and image to text translator tools. A testament to the work you have accomplished and a motivator to continue to build on the project.
         </p>
         <p>
-          Our team is working hard to develop new features, expand our translation capabilities, and add even more services to help you do more — effortlessly. Each update will push performance, speed, and accuracy to new levels.
-        </p>
-        <p>
-          Thank you for supporting what we’re building. Every uploaded image and every bit of feedback helps our technology learn and improve. We’re excited to keep growing with you — and to make sure your picture to text experience stays the best on the web.
+          We have new features in the works and will work endlessly to build and expand your translation options. Your needs are our needs. They will continuously update to new standards in performance, speed, and accuracy.
         </p>
       </div>
       <div className="mt-8">
@@ -99,7 +92,7 @@ const FounderSection: React.FC = () => (
 );
 
 
-const HomePage: React.FC<HomePageProps> = ({ navigate }) => {
+const HomePage: React.FC<HomePageProps> = () => {
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [imageUrl, setImageUrl] = useState<string | null>(null);
     const [extractedText, setExtractedText] = useState<string>('');
@@ -188,7 +181,7 @@ const HomePage: React.FC<HomePageProps> = ({ navigate }) => {
           <p 
             className="mt-6 max-w-3xl mx-auto text-lg sm:text-xl text-gray-300"
           >
-            Transform any visual content into editable text in seconds, Start Now.
+            Transform any visual content into editable text in seconds.
           </p>
            <p className="mt-4 text-sm text-indigo-300 tracking-wider">
             AI-Powered OCR Technology &nbsp; | &nbsp; 99.9% Accuracy &nbsp; | &nbsp; 100+ Languages Supported
@@ -207,8 +200,7 @@ const HomePage: React.FC<HomePageProps> = ({ navigate }) => {
       {/* Intro Section */}
        <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <p className="text-xl text-gray-300 leading-relaxed">
-                While effortless converters are available, we provide all-in-one OCR and translation services to creators, professionals, students, and developers needing speed, precision, and a global reach. 
-                Turn every image, every screenshot, and every document into text. Extract, edit, translate, and share—all with a single click.
+                Sure, effortless converters exist, but feel free to use our OCR. For speedy, precise all-in-one OCR and translation services, we cater to creators, professionals, students, and developers needing a global reach. Every image, every screenshot, every document—turn it to text, extract, edit, translate, and share— all in a click. See the magic for yourself.
             </p>
        </section>
       
@@ -217,7 +209,7 @@ const HomePage: React.FC<HomePageProps> = ({ navigate }) => {
         <div className="text-center mb-12">
             <h2 className="text-3xl font-extrabold text-white sm:text-4xl">Instant, Accurate, and Amazingly Simple</h2>
              <p className="mt-4 text-lg text-gray-400 max-w-3xl mx-auto">
-                Imagine uploading an image to your browser and, almost instantaneously, receiving flawless text in return. With your browser as an interface, utilize the power of our AI-driven image-to-text engine.
+                Picture this: you upload an image to your browser and get back flawless text in seconds. With your browser as an interface, you can use our powerful AI-driven image-to-text engine. Click to upload or just drag and drop your file (PNG, JPG, or WEBP, up to 4 MB). Then, hit Extract Text and behold the results in seconds.
             </p>
         </div>
         <div className="w-full flex flex-col items-center space-y-6">
@@ -270,23 +262,26 @@ const HomePage: React.FC<HomePageProps> = ({ navigate }) => {
                  <ShareComponent shareUrl="https://mosagraphic.com" shareText="Check out this awesome AI Image to Text tool from mosagraphic!" />
             )}
         </div>
+         <div className="mt-12 text-center text-gray-400">
+          <p>You can upload an image, and we’ll extract the text in the language of your choice instantly. The text you requested has been generated and is ready for you to copy, edit, or export. You will understand why over 500,000 users incorporate image to text in their workflows after seeing your first conversion.</p>
+        </div>
       </section>
       
       {/* How It Works Section */}
         <section id="how-it-works" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-                <h2 className="text-3xl font-extrabold text-white sm:text-4xl">Three Steps to Your Text</h2>
+                <h2 className="text-3xl font-extrabold text-white sm:text-4xl">Three Steps to Get Your Text</h2>
             </div>
             <div className="flex flex-col md:flex-row items-stretch justify-center gap-8 md:gap-4">
-                <HowItWorksStep step="1" title="Upload" description="Uploading a text image for processing is as simple as dragging and dropping a screenshot, photo, or scanned document of any type (JPG, PNG, or WEBP) into your browser." icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>} />
+                <HowItWorksStep step="1" title="Upload" description="Uploading a text image for processing is easy—just drag and drop a screenshot, photo, or any scanned document into your browser. We support JPG, PNG, and WEBP formats." icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>} />
                 <div className="flex items-center justify-center">
                     <div className="h-20 w-1 md:h-1 md:w-20 bg-gradient-to-b md:bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-50 rounded-full"></div>
                 </div>
-                <HowItWorksStep step="2" title="AI Processing" description="The system offers text recognition, language detection, and layout analysis. Each process is executed in milliseconds through optimized neural delivery, ensuring fast and seamless delivery." icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M12 19c-3.866 0-7-3.134-7-7s3.134-7 7-7 7 3.134 7 7-3.134 7-7 7z" /></svg>} />
+                <HowItWorksStep step="2" title="AI Processing" description="The system automatically integrates text recognition, language detection, and layout adjustment. Each image’s text and layout processing is completed in milliseconds, leveraging cutting-edge neural network techniques for rapid processing." icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M12 19c-3.866 0-7-3.134-7-7s3.134-7 7-7 7 3.134 7 7-3.134 7-7 7z" /></svg>} />
                 <div className="flex items-center justify-center">
                     <div className="h-20 w-1 md:h-1 md:w-20 bg-gradient-to-b md:bg-gradient-to-r from-transparent via-purple-500 to-transparent opacity-50 rounded-full"></div>
                 </div>
-                <HowItWorksStep step="3" title="Extract & Use" description="Edited extracted text is available for instant copying, translation, and export, aiding in research papers, business documentation, and language learning." icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>} />
+                <HowItWorksStep step="3" title="Extract & Use" description="Edited extracted text is available for instant copying, and document conversion options streamlines exporting. Text can also be continuously translated which is useful for writing research papers, creating business documents, language learning and more." icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>} />
             </div>
         </section>
 
@@ -294,22 +289,22 @@ const HomePage: React.FC<HomePageProps> = ({ navigate }) => {
       <section id="features" className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
             <h2 className="text-3xl font-extrabold text-white sm:text-4xl">Rational in Design</h2>
-            <p className="mt-4 text-lg text-gray-400">A cluttered screen can be distracting; every function of our system is designed to preserve focus and increase productivity.</p>
+            <p className="mt-4 text-lg text-gray-400">From a design perspective, it is important to keep a screen uncluttered to preserve customer focus and drive productivity.</p>
         </div>
         <div className="relative mt-16">
             <div className="absolute top-1/2 left-1/2 w-[40rem] h-[40rem] lg:w-[60rem] lg:h-[60rem] bg-gradient-to-br from-indigo-600/20 to-purple-600/20 -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl opacity-50 animate-pulse-slow pointer-events-none"></div>
             <div className="relative grid grid-cols-1 md:grid-cols-2 gap-8">
                 <FeatureCard icon="⚡️" title="Process Documents in Pareto-optimal Time">
-                   Our OCR engine is 10x more efficient than the industry standard. Bulk-upload hundreds of images and get results in seconds. Average processing time: 0.8 seconds per page.
+                   Results are returned in seconds after images are uploaded in bulk. We average 0.8 seconds to process a page. Our OCR (Optical Character Recognition) engine is 10 times more efficient in converting images to text than industry standard, meaning we do it much faster.
                 </FeatureCard>
                 <FeatureCard icon="🎯" title="Top-Notch OCR Accuracy">
-                    Achieve 99.9% accuracy with every conversion. Our AI trains on millions of data samples to handle cursive, handwritten, and multilingual documents with equal proficiency.
+                    Enjoy 99.9% accuracy every single time with 100% Picture to Text and Image to Text conversion, even with cursive, handwritten documents and others in different languages. Our AI systems increase accuracy with each training cycle on millions of documents which translates to 99.9% precision on OCR text and image integration.
                 </FeatureCard>
                 <FeatureCard icon="🌍" title="Text Transformation in 100+ Languages">
-                    Global communication is instant, thanks to our built-in image to text translator. It translates texts in real time across 100+ languages, from English to Arabic, Chinese to Cyrillic.
+                    With our image to text translator, text conversion and translation is instant. Translations are done in real time and span a multitude of languages including English, Arabic, Chinese, and Cyrillic.
                 </FeatureCard>
                 <FeatureCard icon="📐" title="Text After Conversion with Original Layout">
-                    No more headaches with reformatting. Tables, columns, and other complex layouts are preserved, giving you structured, ready-to-use documents.
+                    Rest assured your tables, columns, and other complex document layouts will remain intact. Forget about the headache of reformatting altered documents. We preserve the original layout.
                 </FeatureCard>
             </div>
         </div>
@@ -319,54 +314,96 @@ const HomePage: React.FC<HomePageProps> = ({ navigate }) => {
       <section id="services" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
          <div className="text-center mb-12">
             <h2 className="text-3xl font-extrabold text-white sm:text-4xl">One Tool, Limitless Applications</h2>
-            <p className="mt-4 text-lg text-gray-400">This platform is designed for every use case from screen to document, picture to text, image to data.</p>
+            <p className="mt-4 text-lg text-gray-400">This platform caters to every use case from screen document, picture text, and image data.</p>
         </div>
         <div className="grid md:grid-cols-3 gap-8">
             <ServiceCard 
-                icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>}
+                icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>}
                 title="Screen to Text Capture"
-                description="Instantly capture text from screen-shots, online presentations, or virtual meetings. Ideal for researchers, journalists, and students."
+                description="Capture text from screen- shots, online presentations, or virtual meetings. This feature is great for researchers, journalists, and students who need quick access to text content displayed on a screen."
                 features={["Real-time capture", "Smart region selection", "Auto-sync to clipboard"]}
-                cta="Try Screen Capture →"
+                cta="Try Screen Capture"
                 onCtaClick={handleCtaClick}
             />
             <ServiceCard 
-                icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l-1-1a2 2 0 010-2.828l1-1a2 2 0 012.828 0l2 2A2 2 0 0119 12v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>}
+                icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l-1-1a2 2 0 010-2.828l1-1a2 2 0 012.828 0l2 2A2 2 0 0119 12v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>}
                 title="Advanced Image to Text"
-                description="Seamlessly convert photos, contracts, invoices, receipts, and scanned documents into editable formats with industry-leading accuracy."
-                features={["AI-powered recognition", "100+ language support", "Layout preservation"]}
-                cta="Upload Your Image →"
+                description={<>Photos, contracts, invoices, receipts and scanned documents can all be converted to editable formats seamlessly and accurately. <br/><br/><i>Comprehension of nearly human level will be your work.</i></>}
+                features={["AI-powered recognition", "100+ languages supported", "Layout preservation"]}
+                cta="Upload Your Image"
                 onCtaClick={handleCtaClick}
             />
             <ServiceCard 
-                icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>}
+                icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>}
                 title="Picture to Text Solutions"
-                description="Our system extracts everything cleanly and precisely, even from a handwritten note, a street sign or a business card. It's mobile-optimized for when inspiration strikes."
+                description="Our picture to text system extracts everything clean and precisely, even a handwritten note, a street sign or a business card. It's mobile-optimized for when inspiration (or documentation) strikes."
                 features={["Scan business cards", "Multifunctional export", "Batch image processing"]}
-                cta="Start Converting →"
+                cta="Start Converting"
                 onCtaClick={handleCtaClick}
             />
         </div>
       </section>
 
+      {/* Picture to Text Tech Section */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center">
+            <h2 className="text-3xl font-extrabold text-white sm:text-4xl">Reducing Time with Picture to Text Technology</h2>
+        </div>
+        <div className="mt-8 prose prose-invert prose-lg mx-auto text-gray-300">
+          <p>For most people, taking a visual document such as a scanned PDF, notes, screenshots, or contracts involves a lot of time to get the relevant information. With picture to text technology, this time-consuming process is simplified.</p>
+          <ul>
+            <li>Reduce transcription time by 20x.</li>
+            <li>Avoid adjusting over costs.</li>
+            <li>Translate your text along with your image.</li>
+          </ul>
+          <p>Our picture to text technology is a tool ready as a virtual assistant to assist you in a multitude of tasks such as transcribing lecture notes, digitizing documents, or translating travel menus.</p>
+        </div>
+      </section>
+
+      {/* Why Our Platform Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+            <h2 className="text-3xl font-extrabold text-white sm:text-4xl">Why Our Image to Text Platform?</h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="bg-gray-800/30 p-6 rounded-xl border border-white/10">
+            <h3 className="font-bold text-white mb-2">1. Integrate Functions From Other Platforms</h3>
+            <p className="text-gray-400">You do not have to install Image to Text or register on any device or browser. Image to Text is easily accessible to mobile users for photo to text scans and to desktop users performing batch operations. Just upload and process.</p>
+          </div>
+          <div className="bg-gray-800/30 p-6 rounded-xl border border-white/10">
+            <h3 className="font-bold text-white mb-2">2. Protecting Your Privacy and Data</h3>
+            <p className="text-gray-400">Image to Text follows all legal privacy protection regulations. We are fully compliant with GDPR and with AdSense privacy regulations. Uploaded and extracted documents are not stored, ensuring complete confidentiality.</p>
+          </div>
+          <div className="bg-gray-800/30 p-6 rounded-xl border border-white/10">
+            <h3 className="font-bold text-white mb-2">3. Translation That is Accurate</h3>
+            <p className="text-gray-400">Compared to other automatic translators available, our image to text translator is much more context aware. It picks up on idioms and professional terminologies and does not lose meaning.</p>
+          </div>
+          <div className="bg-gray-800/30 p-6 rounded-xl border border-white/10">
+            <h3 className="font-bold text-white mb-2">4. Using Deep Learning Technology</h3>
+            <p className="text-gray-400">Image to Text uses sophisticated Deep Learning Technology to accurately read and interpret text images. Image to Text Deep Learning Technology produces highly accurate results, even with low resolution scans.</p>
+          </div>
+        </div>
+      </section>
+
+
       {/* Testimonials Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-             <p className="text-lg text-indigo-300">Over half a million users save over 20 hours each week thanks to automated text extraction from images.</p>
+             <p className="text-lg text-indigo-300">More than half a million users automated text extraction from images and gained more than 20 hours a week.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <TestimonialCard 
-                quote="I converted hundreds of scanned invoices into editable spreadsheets in a single afternoon. What used to take days now takes minutes."
+                quote="In one afternoon, I converted hundreds of scanned invoices. Tasks that used to take days, now only take minutes."
                 name="Daniel K."
                 role="Accountant"
             />
             <TestimonialCard 
-                quote="The built-in image to text translator saved my research! I extracted data from Japanese journals and instantly translated it."
+                quote="The built in image to text translator helped a lot with my research! I even extracted data from Japanese journals and translated it on the spot."
                 name="Jack"
                 role="Researcher"
             />
             <TestimonialCard 
-                quote="It has enhanced collaboration among my design team during remote work in using scanned images to extract text from notes."
+                quote="It has enhanced my design team's collaboration during remote work as we use scanned images to extract text from notes."
                 name="Amina L."
                 role="Creative Director"
             />
@@ -375,37 +412,45 @@ const HomePage: React.FC<HomePageProps> = ({ navigate }) => {
 
       {/* Founder Section */}
       <FounderSection />
-
-      {/* Final CTA Section */}
+      
+       {/* Final CTA Section */}
        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="relative bg-gray-900/50 rounded-2xl p-8 md:p-12 text-center overflow-hidden border border-white/10">
                 <div className="absolute inset-0 -z-10">
                     <div className="absolute top-1/2 left-1/2 w-[50rem] h-[50rem] bg-gradient-to-br from-indigo-600/30 to-purple-600/30 -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl opacity-70 animate-pulse-slow"></div>
                 </div>
-                 <h2 className="text-3xl font-extrabold text-white sm:text-4xl">Are You Prepared to Alter How You Handle Your Visual Data?</h2>
-                 <p className="mt-4 text-lg text-indigo-200">Your images contain hidden information. Let’s retrieve it! Stop retyping screenshots and automate the process with AI.</p>
+                 <h2 className="text-3xl font-extrabold text-white sm:text-4xl">Ready to Change the Way You Work with Visual Data?</h2>
+                 <p className="mt-4 text-lg text-indigo-200">Your images have valuable and hidden information. Let’s extract it! Stop painstakingly retyping screenshots or working with lousy PDFs. Let AI automate the job.</p>
                  <div className="mt-8">
                     <button
                         onClick={handleCtaClick}
                         className="px-8 py-4 border border-transparent text-lg font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-100 transition-colors shadow-lg shadow-white/10 transform hover:scale-105"
                     >
-                        Use mosagraphic Now
+                        Try mosagraphic Now for Free
                     </button>
                  </div>
             </div>
        </section>
-
+      
         {/* Technical Section */}
         <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
              <h2 className="text-3xl font-extrabold text-white sm:text-4xl">Technical Innovation Leading the Way</h2>
-             <p className="mt-4 text-lg text-gray-400">At our core, we balance speed, accuracy, and contextual translation in our OCR engine. Our proprietary Neural Vision Pipeline, trained on over 40 million images, detects edge and contextual patterns for unparalleled precision.</p>
+             <p className="mt-4 text-lg text-gray-400">Speed, accuracy, and contextual translation are key features of our OCR engine. With the proprietary Neural Vision Pipeline, which analyzes over 40 million images, we obtain edge and contextual pattern recognition. This guarantees unmatched precision.</p>
              <div className="mt-8 text-left prose prose-invert prose-md mx-auto text-gray-300">
                 <ul>
-                    <li><strong>Adaptive Multilingual Recognition:</strong> The translator uses transformer-based models to adjust to spelling and regional variations instantly.</li>
-                    <li><strong>Auto Language Detection:</strong> Upload an image with multiple languages, and the AI will separate and identify each for translation.</li>
-                    <li><strong>Intelligent Post-processing:</strong> All outputs undergo punctuation adjustments and de-hyphenation for a final text that appears manually crafted.</li>
+                    <li><strong>Adaptive Multilingual Recognition:</strong> The translator promptly integrates spelling and regional differences because of our transformer-based models.</li>
+                    <li><strong>Auto Language Detection:</strong> The AI is capable of detecting and segregating multiple languages uploaded in an image and identifies the parts for translation.</li>
+                    <li><strong>Intelligent Post Processing:</strong> Every output is adjusted to look as though it was crafted by a person. This is achieved through automated punctuation adjustment and de-hyphenation.</li>
                 </ul>
              </div>
+        </section>
+
+        {/* Sustainability Section */}
+        <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center bg-gray-800/30 p-8 rounded-2xl border border-white/10">
+            <h2 className="text-2xl font-bold text-white sm:text-3xl">Sustainability and Accessibility Commitment</h2>
+            <p className="mt-4 text-gray-400">Our codebase includes accessibility features such as screen-reader support, keyboard navigation, and color contrast. We also evaluate our impact on the environment: your images converted into texts are processed on servers located in data centers that use carbon offsetting, demonstrating minimal ecological impact.</p>
+          </div>
         </section>
 
     </div>
