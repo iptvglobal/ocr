@@ -41,7 +41,7 @@ const TOSPage: React.FC = () => {
           </p>
 
           <div>
-            <h2>1. Acceptance of Terms</h2>
+            <h2 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-purple-400 mb-4">1. Acceptance of Terms</h2>
             <p>
               By accessing or using our website and services, you agree to
               comply with these Terms and Conditions. If you do not agree,
@@ -50,7 +50,7 @@ const TOSPage: React.FC = () => {
           </div>
 
           <div>
-            <h2>2. Description of Service</h2>
+            <h2 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-purple-400 mb-4">2. Description of Service</h2>
             <p>
               Our tool allows users to upload images that contain text,
               automatically extract that text, and edit or download it. The
@@ -61,7 +61,7 @@ const TOSPage: React.FC = () => {
           </div>
 
           <div>
-            <h2>3. User Responsibilities</h2>
+            <h2 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-purple-400 mb-4">3. User Responsibilities</h2>
             <p>You are responsible for all activities under your use of our tool. You agree not to upload or edit:</p>
             <ul>
               <li>Any content that violates the law.</li>
@@ -77,7 +77,7 @@ const TOSPage: React.FC = () => {
           </div>
 
           <div>
-            <h2>4. Intellectual Property</h2>
+            <h2 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-purple-400 mb-4">4. Intellectual Property</h2>
             <p>
               All software, content, and design elements on this site are owned
               by us or our licensors. You may not reproduce, distribute, or
@@ -86,7 +86,7 @@ const TOSPage: React.FC = () => {
           </div>
 
           <div>
-            <h2>5. Disclaimer of Warranties</h2>
+            <h2 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-purple-400 mb-4">5. Disclaimer of Warranties</h2>
             <p>
               The service is provided “as is” and “as available.” We do not
               guarantee that it will be error-free, uninterrupted, or that all
@@ -95,7 +95,7 @@ const TOSPage: React.FC = () => {
           </div>
 
           <div>
-            <h2>6. Limitation of Liability</h2>
+            <h2 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-purple-400 mb-4">6. Limitation of Liability</h2>
             <p>
               We are not responsible for any direct or indirect damages, data
               loss, or misuse of the service. Use of this tool is entirely at
@@ -104,7 +104,7 @@ const TOSPage: React.FC = () => {
           </div>
 
           <div>
-            <h2>7. Privacy</h2>
+            <h2 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-purple-400 mb-4">7. Privacy</h2>
             <p>
               We respect your privacy. Uploaded images may be temporarily
               processed but are not stored permanently. For more information,
@@ -120,7 +120,7 @@ const TOSPage: React.FC = () => {
           </div>
 
           <div>
-            <h2>8. Modifications to Terms</h2>
+            <h2 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-purple-400 mb-4">8. Modifications to Terms</h2>
             <p>
               We may update these Terms at any time. Updates will be posted on
               this page with a new effective date.
@@ -128,7 +128,7 @@ const TOSPage: React.FC = () => {
           </div>
 
           <div>
-            <h2>9. Governing Law</h2>
+            <h2 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-purple-400 mb-4">9. Governing Law</h2>
             <p>
               These Terms are governed by the laws of Portugal and applicable EU
               regulations.
@@ -136,7 +136,7 @@ const TOSPage: React.FC = () => {
           </div>
 
           <div>
-            <h2>10. Contact</h2>
+            <h2 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-purple-400 mb-4">10. Contact</h2>
             <p>
               If you have any questions, please contact us at:{" "}
               <a

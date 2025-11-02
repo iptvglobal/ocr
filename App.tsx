@@ -7,6 +7,7 @@ import FAQPage from './FAQPage';
 import PrivacyPage from './PrivacyPage';
 import TOSPage from './TOSPage';
 import ContactPage from './ContactPage';
+import DMCAPage from './DMCAPage';
 
 function App() {
   const renderPage = () => {
@@ -22,6 +23,8 @@ function App() {
         return <TOSPage />;
       case '/contact':
         return <ContactPage />;
+      case '/dmca-policy':
+        return <DMCAPage />;
       case '/':
       default:
         // Render HomePage for the root path or any unknown paths

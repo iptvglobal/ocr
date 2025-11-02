@@ -10,6 +10,7 @@ export const Footer: React.FC = () => {
         { name: 'Privacy Policy', href: '/privacy-policy' },
         { name: 'Terms of Service', href: '/terms-of-service' },
         { name: 'FAQ', href: '/faq' },
+        { name: 'DMCA Policy', href: '/dmca-policy' },
     ];
 
     const socialLinks = [
