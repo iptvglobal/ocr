@@ -204,7 +204,7 @@ const PdfToolPage: React.FC = () => {
                 </div>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-white to-purple-300">
-                        Experience AI-Powered OCR That Unsparingly Changes Your Workflow
+                        PDF to Text Converter – Extract Text from Any PDF and Translate Instantly
                     </h1>
                     <p className="mt-6 max-w-3xl mx-auto text-lg sm:text-xl text-gray-300">
                         Transform any visual content into editable text in seconds.
