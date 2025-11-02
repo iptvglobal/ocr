@@ -1,0 +1,260 @@
+/**
+ * Silktide Cookie Consent Manager Styles
+ * Dark theme to match the application.
+ */
+
+:root {
+    --scc-bg-color: #111827; /* gray-900 */
+    --scc-text-color: #d1d5db; /* gray-300 */
+    --scc-border-color: #374151; /* gray-700 */
+    --scc-primary-color: #4f46e5; /* indigo-600 */
+    --scc-primary-hover-color: #4338ca; /* indigo-700 */
+    --scc-button-bg: #374151; /* gray-700 */
+    --scc-button-hover-bg: #4b5563; /* gray-600 */
+}
+
+/* --- Background Overlay --- */
+#silktide-cookie-background {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 9998;
+    backdrop-filter: blur(4px);
+}
+
+/* --- Main Banner --- */
+#silktide-cookie-banner {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--scc-bg-color);
+    color: var(--scc-text-color);
+    padding: 1rem;
+    border-top: 1px solid var(--scc-border-color);
+    z-index: 9999;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.silktide-cookie-banner-content {
+    max-width: 1120px; /* max-w-6xl */
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.silktide-cookie-banner-content p {
+    margin: 0;
+    font-size: 0.875rem; /* text-sm */
+    line-height: 1.5;
+}
+
+.silktide-cookie-banner-content .decorated-link {
+    color: var(--scc-primary-color);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+.silktide-cookie-banner-content .decorated-link:hover {
+    color: var(--scc-primary-hover-color);
+}
+
+.silktide-cookie-banner-buttons {
+    display: flex;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+/* --- Preferences Modal --- */
+#silktide-cookie-preferences {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    background-color: var(--scc-bg-color);
+    color: var(--scc-text-color);
+    border: 1px solid var(--scc-border-color);
+    border-radius: 0.75rem; /* rounded-xl */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    z-index: 10000;
+}
+
+.silktide-cookie-preferences-content {
+    padding: 1.5rem;
+}
+.silktide-cookie-preferences-content h2 {
+    font-size: 1.5rem; /* text-2xl */
+    font-weight: bold;
+    color: white;
+    margin: 0 0 0.5rem;
+}
+.silktide-cookie-preferences-content p {
+    font-size: 0.875rem; /* text-sm */
+    margin: 0 0 1.5rem;
+}
+
+.silktide-cookie-prefs-types-container {
+    border-top: 1px solid var(--scc-border-color);
+}
+
+.silktide-cookie-prefs-type {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--scc-border-color);
+}
+
+.silktide-cookie-prefs-type-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.silktide-cookie-prefs-type-header h3 {
+    font-size: 1.125rem; /* text-lg */
+    font-weight: bold;
+    color: white;
+    margin: 0;
+}
+
+.silktide-cookie-prefs-type-desc {
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+
+.silktide-required-text {
+    font-size: 0.875rem;
+    color: #9ca3af; /* gray-400 */
+}
+
+.silktide-cookie-prefs-buttons {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+
+/* --- General Button Styles --- */
+#silktide-cookie-banner-buttons button,
+#silktide-cookie-preferences-buttons button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.375rem; /* rounded-md */
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 0.875rem;
+}
+
+#silktide-cookie-banner-buttons .silktide-button-primary,
+#silktide-cookie-preferences-buttons .silktide-button-primary {
+    background-color: var(--scc-primary-color);
+    color: white;
+}
+#silktide-cookie-banner-buttons .silktide-button-primary:hover,
+#silktide-cookie-preferences-buttons .silktide-button-primary:hover {
+    background-color: var(--scc-primary-hover-color);
+}
+#silktide-cookie-banner-buttons button,
+#silktide-cookie-preferences-buttons button {
+    background-color: var(--scc-button-bg);
+    color: var(--scc-text-color);
+}
+#silktide-cookie-banner-buttons button:hover,
+#silktide-cookie-preferences-buttons button:hover {
+    background-color: var(--scc-button-hover-bg);
+}
+
+
+/* --- Toggle Switch --- */
+.silktide-switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+.silktide-switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.silktide-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--scc-button-bg);
+  transition: .4s;
+  border-radius: 34px;
+}
+.silktide-slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+input:checked + .silktide-slider {
+  background-color: var(--scc-primary-color);
+}
+input:focus + .silktide-slider {
+  box-shadow: 0 0 1px var(--scc-primary-color);
+}
+input:checked + .silktide-slider:before {
+  transform: translateX(20px);
+}
+
+/* --- Floating Icon --- */
+#silktide-cookie-icon-container {
+    display: none;
+    position: fixed;
+    z-index: 9997;
+}
+.silktide-cookie-icon-bottomRight { bottom: 1rem; right: 1rem; }
+.silktide-cookie-icon-bottomLeft { bottom: 1rem; left: 1rem; }
+#silktide-cookie-icon-container button {
+    background-color: var(--scc-bg-color);
+    border: 1px solid var(--scc-border-color);
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
+}
+#silktide-cookie-icon-container button:hover {
+    transform: scale(1.1);
+}
+#silktide-cookie-icon-container svg {
+    width: 28px;
+    height: 28px;
+    color: var(--scc-text-color);
+}
+
+/* --- Media Queries --- */
+@media (max-width: 768px) {
+    .silktide-cookie-banner-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    .silktide-cookie-banner-buttons {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
