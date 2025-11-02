@@ -9,7 +9,7 @@ import TOSPage from './TOSPage';
 import ContactPage from './ContactPage';
 import DMCAPage from './DMCAPage';
 import PdfToolPage from './PdfToolPage';
-import { CookieConsent } from './components/CookieConsent';
+import CookiePolicyPage from './CookiePolicyPage';
 
 function App() {
   const renderPage = () => {
@@ -29,6 +29,8 @@ function App() {
         return <DMCAPage />;
       case '/pdf-to-text':
         return <PdfToolPage />;
+      case '/Cookie-Policy':
+        return <CookiePolicyPage />;
       case '/':
       default:
         // Render HomePage for the root path or any unknown paths
@@ -43,7 +45,6 @@ function App() {
         {renderPage()}
       </main>
       <Footer />
-      <CookieConsent />
     </div>
   );
 }

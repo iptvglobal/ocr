@@ -11,7 +11,6 @@
     <meta name="author" content="mosagraphic" />
     <meta name="robots" content="index, follow" />
     <meta name="google-adsense-account" content="ca-pub-XXXXXXXXXXXXXXXX">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -29,6 +28,35 @@
     <meta name="twitter:image" content="https://placehold.co/1200x630/111827/94a3b8?text=mosagraphic\nAI%20Image%20to%20Text" />
 
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='h-8 w-8 text-indigo-400' fill='none' viewBox='0 0 24 24' stroke='currentColor'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-6.857 2.143L12 21l-2.143-6.857L3 12l6.857-2.143L12 3z' /%3E%3C/svg%3E" type="image/svg+xml">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/silktide-cookie-consent@3/dist/silktide-cookie-consent.css">
+
+    <!-- Google tag (gtag.js) & Consent Mode v2 setup -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+
+      // Set default consent to 'denied' before any tags fire.
+      // This is essential for GDPR compliance.
+      gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'analytics_storage': 'denied',
+        'functionality_storage': 'denied',
+        'security_storage': 'granted' // Security cookies are necessary and don't require consent.
+      });
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YOUR_TAG_ID"></script> 
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      // Replace G-YOUR_TAG_ID with your actual Google Analytics ID
+      gtag('config', 'G-YOUR_TAG_ID'); 
+    </script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -116,5 +144,115 @@
 </head>
 <body class="bg-gray-900">
     <div id="root"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/silktide-cookie-consent@3/dist/silktide-cookie-consent.js"></script>
+    <script>
+    silktideCookieBannerManager.updateCookieBannerConfig({
+      background: {
+        showBackground: true
+      },
+      cookieIcon: {
+        position: "bottomRight"
+      },
+      cookieTypes: [
+        {
+          id: "necessary",
+          name: "Necessary",
+          description: "<p>These cookies are necessary for the website to function properly and cannot be switched off. They help with things like logging in and setting your privacy preferences.</p>",
+          required: true,
+          onAccept: function() {
+            console.log('Necessary cookies are always active.');
+          }
+        },
+        {
+          id: "analytics",
+          name: "Analytics",
+          description: "<p>These cookies collect information about how visitors use our website. We use this data to improve user experience and analyze performance.</p>",
+          required: false,
+          onAccept: function() {
+            gtag('consent', 'update', {
+              analytics_storage: 'granted',
+            });
+            dataLayer.push({
+              'event': 'consent_accepted_analytics',
+            });
+          },
+          onReject: function() {
+            gtag('consent', 'update', {
+              analytics_storage: 'denied',
+            });
+          }
+        },
+        {
+          id: "advertising",
+          name: "Advertising",
+          description: "<p>These cookies are used to deliver personalized advertisements and measure their effectiveness. They may be set by us or by our advertising partners, including Google AdSense.</p>",
+          required: false,
+          onAccept: function() {
+            gtag('consent', 'update', {
+              ad_storage: 'granted',
+              ad_user_data: 'granted',
+              ad_personalization: 'granted',
+            });
+            dataLayer.push({
+              'event': 'consent_accepted_advertising',
+            });
+          },
+          onReject: function() {
+            gtag('consent', 'update', {
+              ad_storage: 'denied',
+              ad_user_data: 'denied',
+              ad_personalization: 'denied',
+            });
+          }
+        },
+        {
+          id: "functionality",
+          name: "Functionality",
+          description: "These cookies enable enhanced functionality and personalization, such as remembering your preferences.",
+          required: false,
+          onAccept: function() {
+            gtag('consent', 'update', {
+              functionality_storage: 'granted',
+            });
+            dataLayer.push({
+              'event': 'consent_accepted_functionality',
+            });
+          },
+          onReject: function() {
+            gtag('consent', 'update', {
+              functionality_storage: 'denied',
+            });
+          }
+        },
+        {
+          id: "security",
+          name: "Security",
+          description: "These cookies are necessary for the website to function properly and cannot be disabled. They ensure security, load balancing, and session management.",
+          required: true,
+          onAccept: function() {
+             console.log('Security cookies are always active.');
+          }
+        }
+      ],
+      text: {
+        banner: {
+          description: "<p>Mosagraphic uses cookies to improve your experience, show personalized ads, and analyze our traffic. By clicking “Accept All,” you consent to our use of cookies. You can manage your preferences in Cookie Settings. <a data-start=\"901\" data-end=\"955\" class=\"decorated-link\" rel=\"noopener\" target=\"_new\" href=\"/Cookie-Policy\">Cookie Policy<span aria-hidden=\"true\" class=\"ms-0.5 inline-block align-middle leading-none\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"currentColor\" xmlns=\"http://www.w3.org/2000/svg\" data-rtl-flip=\"\" class=\"block h-[0.75em] w-[0.75em] stroke-current stroke-[0.75]\"><path d=\"M14.3349 13.3301V6.60645L5.47065 15.4707C5.21095 15.7304 4.78895 15.7304 4.52925 15.4707C4.26955 15.211 4.26955 14.789 4.52925 14.5293L13.3935 5.66504H6.66011C6.29284 5.66504 5.99507 5.36727 5.99507 5C5.99507 4.63273 6.29284 4.33496 6.66011 4.33496H14.9999L15.1337 4.34863C15.4369 4.41057 15.665 4.67857 15.665 5V13.3301C15.6649 13.6973 15.3672 13.9951 14.9999 13.9951C14.6327 13.9951 14.335 13.6973 14.3349 13.3301Z\"></path></svg></span></a> | <a data-start=\"958\" data-end=\"1014\" class=\"decorated-link cursor-pointer\" rel=\"noopener\" href=\"/privacy-policy\">Privacy Policy</a></p>",
+          acceptAllButtonText: "Accept all",
+          acceptAllButtonAccessibleLabel: "Accept all cookies",
+          rejectNonEssentialButtonText: "Reject non-essential",
+          rejectNonEssentialButtonAccessibleLabel: "Reject non-essential",
+          preferencesButtonText: "Preferences",
+          preferencesButtonAccessibleLabel: "Toggle preferences"
+        },
+        preferences: {
+          title: "Customize Your Cookie Preferences",
+          description: "<p>We respect your right to privacy. You can choose which types of cookies to accept or decline. Your preferences will apply across our website and can be changed at any time in Cookie Settings.</p>",
+          creditLinkText: "Get this banner for free",
+          creditLinkAccessibleLabel: "Get this banner for free"
+        }
+      }
+    });
+    </script>
 </body>
 </html>

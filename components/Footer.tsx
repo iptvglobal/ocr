@@ -10,6 +10,7 @@ export const Footer: React.FC = () => {
         { name: 'Blog', href: 'https://blog.mosagraphic.com' },
         { name: 'Contact', href: '/contact' },
         { name: 'Privacy Policy', href: '/privacy-policy' },
+        { name: 'Cookie Policy', href: '/Cookie-Policy' },
         { name: 'Terms of Service', href: '/terms-of-service' },
         { name: 'FAQ', href: '/faq' },
         { name: 'DMCA Policy', href: '/dmca-policy' },
