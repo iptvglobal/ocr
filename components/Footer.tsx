@@ -6,6 +6,7 @@ import { LinkedInIcon } from './icons/LinkedInIcon';
 export const Footer: React.FC = () => {
     const footerLinks = [
         { name: 'About', href: '/about' },
+        { name: 'Blog', href: 'https://blog.mosagraphic.com' },
         { name: 'Contact', href: '/contact' },
         { name: 'Privacy Policy', href: '/privacy-policy' },
         { name: 'Terms of Service', href: '/terms-of-service' },
@@ -23,16 +24,21 @@ export const Footer: React.FC = () => {
         <footer className="bg-gray-900 border-t border-gray-800">
             <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
                 <nav className="flex flex-wrap justify-center -mx-5 -my-2" aria-label="Footer">
-                    {footerLinks.map((link) => (
-                        <div key={link.name} className="px-5 py-2">
-                            <a
-                                href={link.href}
-                                className="text-base text-gray-400 hover:text-gray-300 transition-colors"
-                            >
-                                {link.name}
-                            </a>
-                        </div>
-                    ))}
+                    {footerLinks.map((link) => {
+                        const isExternal = link.href.startsWith('http');
+                        return (
+                            <div key={link.name} className="px-5 py-2">
+                                <a
+                                    href={link.href}
+                                    className="text-base text-gray-400 hover:text-gray-300 transition-colors"
+                                    target={isExternal ? '_blank' : undefined}
+                                    rel={isExternal ? 'noopener noreferrer' : undefined}
+                                >
+                                    {link.name}
+                                </a>
+                            </div>
+                        );
+                    })}
                 </nav>
                 <div className="mt-8 flex justify-center space-x-6">
                     {socialLinks.map((item) => (

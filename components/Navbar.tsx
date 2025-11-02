@@ -11,6 +11,7 @@ export const Navbar: React.FC = () => {
 
     const navLinks = [
         { name: 'Home', href: '/' },
+        { name: 'Blog', href: 'https://blog.mosagraphic.com' },
         { name: 'About', href: '/about' },
         { name: 'FAQ', href: '/faq' },
         { name: 'Contact', href: '/contact' },
@@ -28,15 +29,19 @@ export const Navbar: React.FC = () => {
                     </div>
                     <div className="hidden md:block">
                         <div className="ml-10 flex items-baseline space-x-4">
-                            {navLinks.map((link) => (
+                            {navLinks.map((link) => {
+                                const isExternal = link.href.startsWith('http');
+                                return (
                                 <a
                                     key={link.name}
                                     href={link.href}
                                     className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                                    target={isExternal ? '_blank' : undefined}
+                                    rel={isExternal ? 'noopener noreferrer' : undefined}
                                 >
                                     {link.name}
                                 </a>
-                            ))}
+                            )})}
                         </div>
                     </div>
                     <div className="-mr-2 flex md:hidden">
@@ -65,16 +70,20 @@ export const Navbar: React.FC = () => {
             {isOpen && (
                 <div className="md:hidden" id="mobile-menu">
                     <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                        {navLinks.map((link) => (
+                        {navLinks.map((link) => {
+                             const isExternal = link.href.startsWith('http');
+                             return (
                             <a
                                 key={link.name}
                                 href={link.href}
                                 onClick={() => setIsOpen(false)}
                                 className="text-gray-300 hover:bg-gray-700 hover:text-white block w-full text-left px-3 py-2 rounded-md text-base font-medium"
+                                target={isExternal ? '_blank' : undefined}
+                                rel={isExternal ? 'noopener noreferrer' : undefined}
                             >
                                 {link.name}
                             </a>
-                        ))}
+                        )})}
                     </div>
                 </div>
             )}
