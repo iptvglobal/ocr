@@ -6,6 +6,7 @@ import { LinkedInIcon } from './icons/LinkedInIcon';
 export const Footer: React.FC = () => {
     const footerLinks = [
         { name: 'About', href: '/about' },
+        { name: 'PDF to Text', href: '/pdf-to-text' },
         { name: 'Blog', href: 'https://blog.mosagraphic.com' },
         { name: 'Contact', href: '/contact' },
         { name: 'Privacy Policy', href: '/privacy-policy' },

@@ -11,6 +11,7 @@ export const Navbar: React.FC = () => {
 
     const navLinks = [
         { name: 'Home', href: '/' },
+        { name: 'PDF to Text', href: '/pdf-to-text' },
         { name: 'Blog', href: 'https://blog.mosagraphic.com' },
         { name: 'About', href: '/about' },
         { name: 'FAQ', href: '/faq' },

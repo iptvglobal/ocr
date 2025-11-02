@@ -30,6 +30,30 @@ export async function extractTextFromImage(imagePart: Part): Promise<string> {
 }
 
 /**
+ * Extracts text from a PDF document using the Gemini API.
+ * @param pdfPart The PDF data as a Generative Part.
+ * @returns The extracted text as a string.
+ */
+export async function extractTextFromPdf(pdfPart: Part): Promise<string> {
+  const prompt = "This is a PDF document. Extract all text from it, preserving the original formatting and layout as much as possible. Pay attention to columns, tables, and page breaks. Return only the extracted text content, without any additional commentary, labels, or explanations.";
+  
+  try {
+    const response = await ai.models.generateContent({
+        model: model,
+        contents: { parts: [pdfPart, { text: prompt }] },
+    });
+    return response.text.trim();
+  } catch (error) {
+    console.error("Error extracting text from PDF:", error);
+    if (error instanceof Error) {
+        throw error;
+    }
+    throw new Error("An unexpected error occurred while extracting text from the PDF. The file might be too large or in an unsupported format.");
+  }
+}
+
+
+/**
  * Translates text to a target language using the Gemini API.
  * @param text The text to translate.
  * @param targetLanguage The language to translate the text into.

@@ -8,6 +8,7 @@ import PrivacyPage from './PrivacyPage';
 import TOSPage from './TOSPage';
 import ContactPage from './ContactPage';
 import DMCAPage from './DMCAPage';
+import PdfToolPage from './PdfToolPage';
 
 function App() {
   const renderPage = () => {
@@ -25,6 +26,8 @@ function App() {
         return <ContactPage />;
       case '/dmca-policy':
         return <DMCAPage />;
+      case '/pdf-to-text':
+        return <PdfToolPage />;
       case '/':
       default:
         // Render HomePage for the root path or any unknown paths
