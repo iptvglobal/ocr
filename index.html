@@ -143,114 +143,25 @@
     <div id="root"></div>
 
     <!-- Silktide Consent Manager JS and Configuration -->
-    <script src="/silktide-consent-manager.js"></script>
-    <script>
-    silktideCookieBannerManager.updateCookieBannerConfig({
-      background: {
-        showBackground: true
-      },
-      cookieIcon: {
-        position: "bottomRight"
-      },
-      cookieTypes: [
-        {
-          id: "necessary",
-          name: "Necessary",
-          description: "<p>These cookies are necessary for the website to function properly and cannot be switched off. They help with things like logging in and setting your privacy preferences.</p>",
-          required: true,
-          onAccept: function() {
-            console.log('Consent for necessary cookies granted.');
-          }
-        },
-        {
-          id: "analytics",
-          name: "Analytics",
-          description: "<p>These cookies collect information about how visitors use our website. We use this data to improve user experience and analyze performance.</p>",
-          required: false,
-          onAccept: function() {
-            gtag('consent', 'update', {
-              analytics_storage: 'granted',
-            });
-            window.dataLayer.push({
-              'event': 'consent_accepted_analytics',
-            });
-          },
-          onReject: function() {
-            gtag('consent', 'update', {
-              analytics_storage: 'denied',
-            });
-          }
-        },
-        {
-          id: "advertising",
-          name: "Advertising",
-          description: "<p>These cookies are used to deliver personalized advertisements and measure their effectiveness. They may be set by us or by our advertising partners, including Google AdSense.</p>",
-          required: false,
-          onAccept: function() {
-            gtag('consent', 'update', {
-              ad_storage: 'granted',
-              ad_user_data: 'granted',
-              ad_personalization: 'granted',
-            });
-            window.dataLayer.push({
-              'event': 'consent_accepted_advertising',
-            });
-          },
-          onReject: function() {
-            gtag('consent', 'update', {
-              ad_storage: 'denied',
-              ad_user_data: 'denied',
-              ad_personalization: 'denied',
-            });
-          }
-        },
-        {
-          id: "functionality",
-          name: "Functionality",
-          description: "These cookies enable enhanced functionality and personalization, such as remembering your preferences.",
-          required: false,
-          onAccept: function() {
-            gtag('consent', 'update', {
-              functionality_storage: 'granted',
-            });
-            window.dataLayer.push({
-              'event': 'consent_accepted_functionality',
-            });
-          },
-          onReject: function() {
-            gtag('consent', 'update', {
-              functionality_storage: 'denied',
-            });
-          }
-        },
-        {
-          id: "security",
-          name: "Security",
-          description: "These cookies are necessary for the website to function properly and cannot be disabled. They ensure security, load balancing, and session management.",
-          required: true,
-          onAccept: function() {
-             console.log('Consent for security cookies granted.');
-          }
-        }
-      ],
-      text: {
-        banner: {
-          description: "<p>Mosagraphic uses cookies to improve your experience, show personalized ads, and analyze our traffic. By clicking “Accept All,” you consent to our use of cookies. You can manage your preferences in Cookie Settings. <a class=\"decorated-link\" rel=\"noopener\" target=\"_new\" href=\"/Cookie-Policy\">Cookie Policy<span aria-hidden=\"true\" class=\"ms-0.5 inline-block align-middle leading-none\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"currentColor\" xmlns=\"http://www.w3.org/2000/svg\" class=\"block h-[0.75em] w-[0.75em] stroke-current stroke-[0.75]\"><path d=\"M14.3349 13.3301V6.60645L5.47065 15.4707C5.21095 15.7304 4.78895 15.7304 4.52925 15.4707C4.26955 15.211 4.26955 14.789 4.52925 14.5293L13.3935 5.66504H6.66011C6.29284 5.66504 5.99507 5.36727 5.99507 5C5.99507 4.63273 6.29284 4.33496 6.66011 4.33496H14.9999L15.1337 4.34863C15.4369 4.41057 15.665 4.67857 15.665 5V13.3301C15.6649 13.6973 15.3672 13.9951 14.9999 13.9951C14.6327 13.9951 14.335 13.6973 14.3349 13.3301Z\"></path></svg></span></a> | <a class=\"decorated-link cursor-pointer\" rel=\"noopener\" href=\"/privacy-policy\">Privacy Policy</a></p>",
-          acceptAllButtonText: "Accept all",
-          acceptAllButtonAccessibleLabel: "Accept all cookies",
-          rejectNonEssentialButtonText: "Reject non-essential",
-          rejectNonEssentialButtonAccessibleLabel: "Reject non-essential",
-          preferencesButtonText: "Preferences",
-          preferencesButtonAccessibleLabel: "Toggle preferences"
-        },
-        preferences: {
-          title: "Customize Your Cookie Preferences",
-          description: "<p>We respect your right to privacy. You can choose which types of cookies to accept or decline. Your preferences will apply across our website and can be changed at any time in Cookie Settings.</p>",
-          creditLinkText: "Get this banner for free",
-          creditLinkAccessibleLabel: "Get this banner for free"
-        }
-      }
-    });
-    </script>
+<!-- Cookie Consent by TermsFeed https://www.TermsFeed.com -->
+<script type="text/javascript" src="//www.termsfeed.com/public/cookie-consent/4.2.0/cookie-consent.js" charset="UTF-8"></script>
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({"notice_banner_type":"simple","consent_type":"express","palette":"light","language":"en","page_load_consent_levels":["strictly-necessary"],"notice_banner_reject_button_hide":false,"preferences_center_close_button_hide":false,"page_refresh_confirmation_buttons":false,"website_privacy_policy_url":"https://mosagraphic.com/privacy-policy"});
+});
+</script>
+
+<noscript>Free cookie consent management tool by <a href="https://www.termsfeed.com/">TermsFeed Generator</a></noscript>
+<!-- End Cookie Consent by TermsFeed https://www.TermsFeed.com -->
+
+
+
+
+
+<!-- Below is the link that users can use to open Preferences Center to change their preferences. Do not modify the ID parameter. Place it where appropriate, style it as needed. -->
+
+<a href="#" id="open_preferences_center">Update cookies preferences</a>
+
+
 </body>
 </html>
