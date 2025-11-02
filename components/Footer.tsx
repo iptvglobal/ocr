@@ -16,9 +16,9 @@ export const Footer: React.FC = () => {
     ];
 
     const socialLinks = [
-        { name: 'Twitter', href: 'https://twitter.com/mosagraphic', icon: <TwitterIcon /> },
-        { name: 'Facebook', href: 'https://facebook.com/mosagraphic', icon: <FacebookIcon /> },
-        { name: 'LinkedIn', href: 'https://linkedin.com/company/mosagraphic', icon: <LinkedInIcon /> },
+        { name: 'Twitter', href: 'https://x.com/aymanlsfr', icon: <TwitterIcon /> },
+        { name: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61580080960894', icon: <FacebookIcon /> },
+        { name: 'LinkedIn', href: 'https://www.linkedin.com/in/learnup-lasfar-1a7399374/', icon: <LinkedInIcon /> },
     ];
 
     return (

@@ -9,6 +9,7 @@ import TOSPage from './TOSPage';
 import ContactPage from './ContactPage';
 import DMCAPage from './DMCAPage';
 import PdfToolPage from './PdfToolPage';
+import { CookieConsent } from './components/CookieConsent';
 
 function App() {
   const renderPage = () => {
@@ -42,6 +43,7 @@ function App() {
         {renderPage()}
       </main>
       <Footer />
+      <CookieConsent />
     </div>
   );
 }

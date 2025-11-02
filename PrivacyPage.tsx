@@ -92,6 +92,9 @@ const PrivacyPage: React.FC = () => {
                 <li><strong>Personalized Advertising:</strong> The ads served by Google AdSense may be personalized. You can opt out of personalized advertising by visiting Google's <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer">Ads Settings</a>.</li>
                 <li><strong>Third-Party Vendors and Ad Networks:</strong> We notify you of the third-party vendors and ad networks serving ads on our site. You may visit the websites of those vendors and ad networks to opt out of the use of cookies for personalized advertising (if the vendor or ad network offers this capability).</li>
             </ul>
+            <p className="mt-4">
+              You can manage your consent for personalized advertising at any time through our cookie consent banner. Declining consent will not disable ads but will prevent them from being personalized to your interests.
+            </p>
           </div>
 
           <div id="your-rights">
